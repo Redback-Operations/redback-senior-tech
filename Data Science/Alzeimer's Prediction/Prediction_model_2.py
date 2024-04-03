@@ -42,4 +42,3 @@ print(imputation_check)
 
 dataset_cleaned = dataset
 
-print(dataset_cleaned.head())
