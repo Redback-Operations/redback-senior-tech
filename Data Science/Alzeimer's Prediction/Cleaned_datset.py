@@ -3,7 +3,6 @@ import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
 
-
 dataset = pd.read_csv(r"C:\Users\asus\Desktop\Elderly_Wearable_Tech\Data Science\Alzeimer's Prediction\Alzheimer's dataset.csv")
 
 # Check for null values in each column
@@ -40,4 +39,4 @@ imputation_check = dataset.isnull().sum()
 # Printing the results
 print(imputation_check)
 
-dataset_cleaned = dataset
+cleaned = dataset
