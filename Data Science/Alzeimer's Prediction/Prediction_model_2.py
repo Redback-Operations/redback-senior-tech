@@ -41,3 +41,5 @@ imputation_check = dataset.isnull().sum()
 print(imputation_check)
 
 dataset_cleaned = dataset
+
+print(dataset_cleaned.head())
