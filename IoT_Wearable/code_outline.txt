@@ -6,6 +6,6 @@ The gas sensor detects if there is bad air quality, if there is, the buzzer soun
 The vibration sensor senses vibration, if over a threshold, the buzzer sounds.
 Ambient light sensor is for the oled brightness regulation.
 Touch sensor when touched, will scroll through the data, basically displaying the data of the different sensors.
-
+All the sensor data will be sent to the web in csv file form.
 
 Note: Visual Studio Code Live Share Extension to collaborate for the Arduino code
