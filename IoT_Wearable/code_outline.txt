@@ -1,0 +1,11 @@
+All sensors are collecting data and processing through the Arduino Nano 33 IoT to the web, ( google firebase )
+Flame sensor, gas sensor, dht22, touch sensor, vibration sensor, ambient light sensor, buzzer, oled display, heart rate sensor, lm35dz, Arduino Nano 33 IoT with inbuilt 3-axis accelerometer and RTC
+The flame, gas, dht22, vibration, heart rate, lm35dz and ambient light sensor are all working passively, getting data from the environment and person and sends the data to the web with timestamp (RTC).
+The flame sensor detects if there is a fire, if there is, the buzzer sounds.
+The gas sensor detects if there is bad air quality, if there is, the buzzer sounds.
+The vibration sensor senses vibration, if over a threshold, the buzzer sounds.
+Ambient light sensor is for the oled brightness regulation.
+Touch sensor when touched, will scroll through the data, basically displaying the data of the different sensors.
+All the sensor data will be sent to the web in csv file form.
+
+Note: Visual Studio Code Live Share Extension to collaborate for the Arduino code
