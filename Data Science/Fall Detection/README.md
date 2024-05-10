@@ -5,6 +5,7 @@ The primary objective of integrating a fall detection feature into an elderly we
 
 ## Folder Structure
 Fall Detection
+```
 │
 ├── data
     └── acc_gyr.csv
@@ -16,6 +17,7 @@ Fall Detection
 ├── fall_detection.ipynb
 ├── LICENSE
 └── README.md
+```
 
 ## Project Status
 - **Primary Features Implemented:** Detection of fall using an accelerometer and a gyroscope.
