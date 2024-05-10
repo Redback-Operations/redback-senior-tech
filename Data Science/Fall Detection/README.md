@@ -7,12 +7,12 @@ The primary objective of integrating a fall detection feature into an elderly we
 Fall Detection
 │
 ├── data
-    └── acc_gyr.csv
+│  └── acc_gyr.csv
 ├── docs
-    ├── requirements.txt
-    └── Fall detection requirement document.pdf
+│  ├── requirements.txt
+│  └── Fall detection requirement document.pdf
 ├── models
-    └── fall_detection_model.keras
+│  └── fall_detection_model.keras
 ├── fall_detection.ipynb
 ├── LICENSE
 └── README.md

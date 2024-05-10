@@ -4,14 +4,17 @@
 The primary objective of integrating a voice assistant feature into the elderly care wearable device is to provide essential assistance to elderly individuals with accessibility challenges. This feature aims to offer responses to basic inquiries, provide health-related information, and assist users in managing their daily schedules and health concerns through voice commands.
 
 ## Folder Structure
-The folder contains the python files required to run the feature. Further, the ```main.py``` file can be run directly to use the voice assistant. The ```train_model.py``` file can be run independently to retrain the model and save it. Finally, the ```venv``` folder contains all the required files to run the feature.
+The folder contains the python files required to run the feature. Further, the ```main.py``` file can be run directly to use the voice assistant. The ```train_model.py``` file can be run independently to retrain the model and save it.
 
 ```
 Voice Assistant
 ├─ LICENSE
 ├─ README.md
 ├─ docs
+│  ├─ requirements.txt
 │  └─ Voice Assistant Requirement Documentation.pdf
+├─ neural_intents_code
+│  └─ assistants.py
 ├─ generate_response.py
 ├─ intents.json
 ├─ main.py
@@ -22,8 +25,7 @@ Voice Assistant
 ├─ pygame_win.py
 ├─ speech_to_text.py
 ├─ text_to_speech.py
-├─ train_model.py
-└─ venv
+└─ train_model.py
 ```
 
 ## Project Status
@@ -47,5 +49,7 @@ To run the project on a local machine, follow these steps:
 
 1. Clone the repository from GitHub
 2. Navigate to the ```Voice Assistant``` directory
-3. To retrain a model, run the ```train_model.py``` script
-4. Run the ```main.py``` script to start the voice assistant feature
+3. Install the required dependencies using ```pip install -r docs/requirements.txt```
+4. Use the code in ```neural_intents_code/assistants.py``` to update the neuralintents library code. NOTE: This step is required as for this feature, parts of the neuralintents>assistants.py code are updated.
+5. To retrain a model, run the ```train_model.py``` script
+6. Run the ```main.py``` script to start the voice assistant feature
