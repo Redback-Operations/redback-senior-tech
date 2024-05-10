@@ -4,8 +4,9 @@
 The primary objective of integrating a fall detection feature into an elderly wearable device is to promptly detect falls during activities such as walking or climbing stairs and notify emergency contacts. The feature also aims to detect abnormalities like limping due to injuries during walking and provide timely alerts to ensure swift assistance.
 
 ## Folder Structure
-Fall Detection
+The folder contains the ipynb files, models and data required to run the project. Further, the ```fall_detection.ipynb``` file can be run directly to use the fall detector.
 ```
+Fall Detection
 │
 ├── data
     └── acc_gyr.csv
