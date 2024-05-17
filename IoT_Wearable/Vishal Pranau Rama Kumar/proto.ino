@@ -1,4 +1,5 @@
-//to add, heart rate senor code , LM35, connection to firebase with timestamp(rtc)
+//to add, heart rate senor code , LM35, connection to firebase with timestamp(rtc) , digital vibrations sensors sould activate buzzer
+                                                                                        // if that doesnt work use inbuilt accelerometer and gyroscope to do it.
 
 #include <SPI.h>
 #include <WiFiNINA.h>
