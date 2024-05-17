@@ -1,5 +1,6 @@
-//to add, heart rate senor code , LM35, connection to firebase with timestamp(rtc) , digital vibrations sensors sould activate buzzer
+//to add, heart rate senor code , LM35, connection to firebase with timestamp(rtc) , digital vibrations sensors sould activate buzzer, revmove the lightsensor code that changes the backlight, it should be removed
                                                                                         // if that doesnt work use inbuilt accelerometer and gyroscope to do it.
+                                                                                    
 
 #include <SPI.h>
 #include <WiFiNINA.h>
