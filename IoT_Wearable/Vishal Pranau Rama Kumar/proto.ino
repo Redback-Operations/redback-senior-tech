@@ -35,10 +35,10 @@ Adafruit_SSD1306 display(128, 64, &Wire, OLED_RESET);
 Adafruit_BME680 bme; // Create an instance of the Adafruit BME680 class
 
 // WiFi and Firebase Configuration
-const char* ssid = "One";
-const char* password = "wifi12345";
-const char* firebaseHost = "https://capstone-85691-default-rtdb.asia-southeast1.firebasedatabase.app/";
-const char* firebaseAuth = "qjWf7V2wnZMT7k1QxG1kR1gTfs9c1DpRwHePMPUa";
+const char* ssid = "One";//Change WIFI SSID to your specification
+const char* password = "wifi12345";//Change password accordingly
+const char* firebaseHost = "https://elderlywearable-default-rtdb.asia-southeast1.firebasedatabase.app/";
+const char* firebaseAuth = "T13IuCe0dn6HwMBzJIhNzXyDv3GjbCxQQo9F0vqo";
 
 int status = WL_IDLE_STATUS;
  
