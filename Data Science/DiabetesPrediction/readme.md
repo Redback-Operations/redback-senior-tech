@@ -1,4 +1,4 @@
-This directory consist of - 
+This directory consist of :
 
 Dataset 01
 This dataset is the first diabetes dataset I worked on. It consists of the following features:
