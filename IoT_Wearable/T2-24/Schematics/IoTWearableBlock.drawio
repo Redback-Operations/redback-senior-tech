@@ -1,6 +1,6 @@
 <mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:128.0) Gecko/20100101 Firefox/128.0" version="24.7.4">
   <diagram name="Page-1" id="16e2658f-23c8-b752-8be9-c03fbebb8bbe">
-    <mxGraphModel dx="1422" dy="763" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850" background="none" math="0" shadow="0">
+    <mxGraphModel dx="1185" dy="637" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850" background="none" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -12,9 +12,6 @@
         </mxCell>
         <mxCell id="g2Q_208xarCO59cymIMF-21" value="Ambient Light&lt;br&gt;Sensor" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
           <mxGeometry x="190" y="420" width="80" height="40" as="geometry" />
-        </mxCell>
-        <mxCell id="g2Q_208xarCO59cymIMF-24" value="1A" style="pointerEvents=1;verticalLabelPosition=bottom;shadow=0;dashed=0;align=center;html=1;verticalAlign=top;shape=mxgraph.electrical.miscellaneous.fuse_1;rotation=-90;movable=1;resizable=1;rotatable=1;deletable=1;editable=1;locked=0;connectable=1;" vertex="1" parent="1">
-          <mxGeometry x="420" y="590" width="60" height="20" as="geometry" />
         </mxCell>
         <mxCell id="g2Q_208xarCO59cymIMF-25" value="" style="pointerEvents=1;verticalLabelPosition=bottom;shadow=0;dashed=0;align=center;html=1;verticalAlign=top;shape=mxgraph.electrical.miscellaneous.batteryStack;" vertex="1" parent="1">
           <mxGeometry x="170" y="650" width="100" height="60" as="geometry" />
@@ -1315,6 +1312,9 @@
             <mxPoint x="180" y="465" as="sourcePoint" />
             <mxPoint x="180" y="355" as="targetPoint" />
           </mxGeometry>
+        </mxCell>
+        <mxCell id="g2Q_208xarCO59cymIMF-377" value="&#xa;1A&#xa;&#xa;" style="html=1;shape=mxgraph.electrical.electro-mechanical.fuse2;aspect=fixed;elSwitchState=on;rotation=-90;" vertex="1" parent="1">
+          <mxGeometry x="406.5" y="590" width="75" height="20" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
