@@ -50,4 +50,3 @@ To run the project on a local machine, follow these steps:
 3. Install the required dependencies using ```pip install -r docs/requirements.txt```
 4. To run the project, run the ```fall_detection.ipynb``` file
 5. To retrain the model with a different dataset, add the dataset into the ```/data``` directory. The trained models are stored in the ```/models``` directory
-   
