@@ -4,33 +4,34 @@
   This is to provide context for the list of changes.
 -->
 
+## Who worked on the changes?
+<!--
+  If multiple students worked on the changes, add the list of students and comment who worked on what changes.
+-->
+- 
 
-### New Components/Features
+## New Components/Features
 <!--
   Add a list of things added in this PR, and briefly describe their purpose.
-  Delete if not applicable.
 -->
 - 
 
-### Enhanced Components/Features
+## Enhanced Components/Features
 <!--
   Add a list of things updated in this PR, and what has been changed.
-  Delete if not applicable.
 -->
 - 
 
-### Other Changes/Fixes
+## Other Changes/Fixes
 <!--
   Add a list of things updated in this PR, and what has been changed.
-  Delete if not applicable.
 -->
 - 
 
-### Additional Notes
+## Additional Notes
 <!--
   Include anything relevant for the reviewer to consider.
   For example things you have knowingly left out of the scope of the PR, or changes that may have caveats/negative consequences.
-  Delete if not applicable.
 -->
 
 ## TODOs
