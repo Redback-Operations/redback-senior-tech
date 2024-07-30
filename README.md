@@ -1,2 +1,2 @@
-# Elderly_Wearable_Tech_T1
+# Elderly_Wearable_Tech
 Developing Wearable Tech sensors For the elderlies, this Github repository will be used for code and data storage.
