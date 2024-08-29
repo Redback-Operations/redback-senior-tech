@@ -1,25 +1,27 @@
-# Parkinson's Disease Prediction Model
+# Parkinson's Disease Prediction
 
-This project focuses on building a machine learning model to predict the presence of Parkinson's disease based on certain features extracted from biomedical voice measurements. The model implemented here utilizes the Random Forest algorithm.
+## Tagline: 
+ Gait Analysis of Parkinson’s Disease (PD) Patients and Control Objects to identify differences using data from Phisonet’s Gaitpdb database.
 
-## Background
+## Description:
+This project involves analyzing gait data to detect Parkinson’s Disease. It uses data from the Phisonet’s Gaitpdb database, where 8 sensors are applied to each foot of the subjects to calculate the Vertical Ground Reaction Forces (VGRF). Data compression is achieved using 7 statistical functions to reduce over 3 million tuples into 310 tuples, providing a representative image of the data.
 
-Parkinson's disease is a neurodegenerative disorder that affects movement. Early detection and diagnosis are crucial for effective management and treatment. Machine learning techniques applied to biomedical data, such as voice recordings, offer a promising avenue for early diagnosis and intervention.
+## Table of Contents
+1. Project Title
+2. Background/Objective
+3. Prerequisites
+4. Project Status
 
-## Dataset
+## Background/Objective
+The objective of this project is to perform the detection of Parkinson’s Disease by analyzing gait data. The goal is to identify differences between PD patients and control subjects to aid in the early detection and diagnosis of Parkinson’s Disease.
 
-The dataset used for training and testing the model contains features extracted from voice recordings of individuals, both with and without Parkinson's disease. Features include various acoustic measures such as jitter, shimmer, and other voice characteristics.
 
-## Model Architecture
+## Prerequisites
+- TensorFlow
+- Matplotlib
+- Jupyter Notebook
+- Scikit-learn
 
-The Random Forest algorithm is employed in this project due to its ability to handle high-dimensional data and nonlinear relationships between features. The model is trained on a subset of the dataset, with appropriate hyperparameter tuning to optimize performance.
-
-## Evaluation Metrics
-
-Evaluation of the model's performance is conducted using standard metrics such as accuracy, precision, recall, and F1-score. Additionally, ROC curves and AUC scores are used to assess the model's discrimination ability.
-
-## Results
-
-The trained Random Forest model demonstrates promising performance in distinguishing individuals with Parkinson's disease from healthy controls. Evaluation metrics indicate robustness and reliability in classification.
-
+## Project Status
+The project is currently in the development stage.
 
