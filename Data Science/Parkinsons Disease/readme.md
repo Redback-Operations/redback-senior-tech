@@ -4,7 +4,9 @@
  Gait Analysis of Parkinson’s Disease (PD) Patients and Control Objects to identify differences using data from Phisonet’s Gaitpdb database.
 
 ## Description:
-This project involves analyzing gait data to detect Parkinson’s Disease. It uses data from the Phisonet’s Gaitpdb database, where 8 sensors are applied to each foot of the subjects to calculate the Vertical Ground Reaction Forces (VGRF). Data compression is achieved using 7 statistical functions to reduce over 3 million tuples into 310 tuples, providing a representative image of the data.
+This project involves analyzing gait data to detect Parkinson’s Disease. It uses data from the Phisonet’s Gaitpdb database, where 8 sensors are applied to each foot of the subjects to calculate the Vertical Ground Reaction Forces (VGRF). Data compression is achieved using 7 statistical functions to reduce over 3 million tuples into 310 tuples, providing a representative image of the data. The dataset is in the following drive links:
+        - https://drive.google.com/file/d/1gJTEqoxrDGixTomn6vYGBWcNP7O1Mdn6/view?usp=drive_link
+        - https://drive.google.com/file/d/1GFEaRlnA92tEFo7C8H8fBDPbHrVP5Wdt/view?usp=drive_link
 
 ## Table of Contents
 1. Project Title
