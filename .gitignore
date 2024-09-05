@@ -1,17 +1,15 @@
 # Virtual environment Files and Directories
-.env/
-.venv/
-ENV/
-env.bak/
-venv/
+.env
+.venv
+venv
 .env
 
 # Jupyter Notebook checkpoints
-.ipynb_checkpoints/
+.ipynb_checkpoints
 
 # IDE Files – VSCode and PyCharm
-.vscode/
-.idea/
+.vscode
+.idea
 
 # macOS files
 .DS_Store
