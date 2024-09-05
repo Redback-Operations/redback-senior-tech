@@ -1,0 +1,716 @@
+*************************************************************
+FileName = Elderly_Wearable_Device.GBR
+AutoAperture = True
+*************************************************************
+Generating : Top Overlay
+      File : Elderly_Wearable_Device.GTO
+
+    Adding Layer      : Top Overlay
+
+
+Used DCodes :
+    D10
+    D11
+    D12
+    D13
+    D14
+*************************************************************
+
+*************************************************************
+Generating : Top Solder
+      File : Elderly_Wearable_Device.GTS
+
+    Adding Layer      : Top Solder
+
+    Adding Layer      : Top
+
+    Adding Layer      : Multi-Layer
+
+
+Used DCodes :
+    D10
+    D25
+    D26
+    D27
+    D28
+    D29
+    D30
+    D31
+    D32
+    D33
+    D34
+    D49
+    D50
+    D51
+    D52
+    D53
+    D54
+    D55
+    D56
+    D57
+    D58
+    D59
+    D60
+    D61
+    D62
+    D63
+    D64
+    D65
+    D66
+    D67
+    D68
+    D69
+    D70
+    D71
+    D72
+    D73
+    D74
+    D75
+    D76
+    D77
+    D78
+    D79
+    D80
+    D81
+    D82
+    D83
+    D84
+    D85
+    D86
+    D87
+    D88
+    D89
+    D90
+*************************************************************
+
+*************************************************************
+Generating : Bottom Solder
+      File : Elderly_Wearable_Device.GBS
+
+    Adding Layer      : Bottom Solder
+
+    Adding Layer      : Bottom Layer
+
+    Adding Layer      : Multi-Layer
+
+
+Used DCodes :
+    D49
+    D50
+    D68
+    D70
+    D72
+    D73
+    D74
+    D75
+    D76
+    D77
+    D78
+    D79
+    D80
+    D81
+    D82
+    D83
+    D84
+    D85
+    D86
+    D87
+    D88
+    D89
+    D90
+    D118
+    D119
+    D120
+    D121
+    D122
+    D123
+    D124
+*************************************************************
+
+*************************************************************
+Generating : Top Pad Master
+      File : Elderly_Wearable_Device.GPT
+
+    Adding Layer      : Top
+
+    Adding Layer      : Multi-Layer
+
+
+Used DCodes :
+    D15
+    D16
+    D17
+    D18
+    D19
+    D20
+    D21
+    D22
+    D23
+    D24
+    D25
+    D26
+    D27
+    D28
+    D29
+    D30
+    D31
+    D32
+    D33
+    D34
+    D35
+    D36
+    D37
+    D38
+    D39
+    D40
+    D41
+    D42
+    D43
+    D44
+    D45
+    D46
+    D47
+    D48
+    D83
+    D84
+    D87
+    D95
+    D96
+    D97
+    D98
+    D99
+    D100
+    D101
+    D102
+    D103
+    D104
+    D105
+    D106
+    D107
+    D108
+*************************************************************
+
+*************************************************************
+Generating : Drill Drawing
+      File : Elderly_Wearable_Device.GD1
+
+    Adding Drill Pair : Top-Bottom Layer
+
+    Adding Layer      : Drill Drawing
+
+
+Used DCodes :
+    D135
+    D136
+    D137
+*************************************************************
+
+*************************************************************
+Generating : Drill Drawing
+      File : Elderly_Wearable_Device.GD2
+
+    Adding Drill Pair : Top-GND
+
+    Adding Layer      : Drill Drawing
+
+
+Used DCodes :
+    D136
+    D137
+*************************************************************
+
+*************************************************************
+Generating : Drill Drawing
+      File : Elderly_Wearable_Device.GD3
+
+    Adding Drill Pair : Top-PWR
+
+    Adding Layer      : Drill Drawing
+
+
+Used DCodes :
+    D136
+    D137
+*************************************************************
+
+*************************************************************
+Generating : Drill Drawing
+      File : Elderly_Wearable_Device.GD4
+
+    Adding Drill Pair : GND-Bottom Layer
+
+    Adding Layer      : Drill Drawing
+
+
+Used DCodes :
+    D136
+    D137
+*************************************************************
+
+*************************************************************
+Generating : Drill Drawing
+      File : Elderly_Wearable_Device.GD5
+
+    Adding Drill Pair : PWR-Bottom Layer
+
+    Adding Layer      : Drill Drawing
+
+
+Used DCodes :
+    D136
+    D137
+*************************************************************
+
+*************************************************************
+Generating : Drill Guide
+      File : Elderly_Wearable_Device.GG1
+
+    Adding Drill Pair : Top-Bottom Layer
+
+    Adding Layer      : Drill Guide
+
+
+Used DCodes :
+    D135
+*************************************************************
+
+*************************************************************
+Generating : Drill Guide
+      File : Elderly_Wearable_Device.GG2
+
+    Adding Drill Pair : Top-GND
+
+    Adding Layer      : Drill Guide
+
+
+Used DCodes :
+    D135
+*************************************************************
+
+*************************************************************
+Generating : Drill Guide
+      File : Elderly_Wearable_Device.GG3
+
+    Adding Drill Pair : Top-PWR
+
+    Adding Layer      : Drill Guide
+
+
+Used DCodes :
+    D135
+*************************************************************
+
+*************************************************************
+Generating : Drill Guide
+      File : Elderly_Wearable_Device.GG4
+
+    Adding Drill Pair : GND-Bottom Layer
+
+    Adding Layer      : Drill Guide
+
+
+Used DCodes :
+    D135
+*************************************************************
+
+*************************************************************
+Generating : Drill Guide
+      File : Elderly_Wearable_Device.GG5
+
+    Adding Drill Pair : PWR-Bottom Layer
+
+    Adding Layer      : Drill Guide
+
+
+Used DCodes :
+    D135
+*************************************************************
+
+*************************************************************
+Generating : Bottom 3D Body
+      File : Elderly_Wearable_Device.GM14
+
+    Adding Layer      : Bottom 3D Body
+
+
+Used DCodes :
+    D10
+    D11
+    D132
+*************************************************************
+
+*************************************************************
+Generating : tDocu
+      File : Elderly_Wearable_Device.GM3
+
+    Adding Layer      : tDocu
+
+
+Used DCodes :
+    D125
+    D126
+    D127
+    D128
+    D129
+    D130
+*************************************************************
+
+*************************************************************
+Generating : Top
+      File : Elderly_Wearable_Device.GTL
+
+    Adding Layer      : Top
+
+    Adding Layer      : Multi-Layer
+
+
+Used DCodes :
+    D11
+    D12
+    D14
+    D15
+    D16
+    D17
+    D18
+    D19
+    D20
+    D21
+    D22
+    D23
+    D24
+    D25
+    D26
+    D27
+    D28
+    D29
+    D30
+    D31
+    D32
+    D33
+    D34
+    D35
+    D36
+    D37
+    D38
+    D39
+    D40
+    D41
+    D42
+    D43
+    D44
+    D45
+    D46
+    D47
+    D48
+    D83
+    D84
+    D87
+    D91
+    D92
+    D93
+    D94
+    D95
+    D96
+    D97
+    D98
+    D99
+    D100
+    D101
+    D102
+    D103
+    D104
+    D105
+    D106
+    D107
+    D108
+    D109
+*************************************************************
+
+*************************************************************
+Generating : GND
+      File : Elderly_Wearable_Device.G1
+
+    Adding Layer      : GND
+
+    Adding Layer      : Multi-Layer
+
+
+Used DCodes :
+    D95
+    D97
+    D99
+    D101
+    D102
+    D103
+    D104
+    D107
+    D109
+*************************************************************
+
+*************************************************************
+Generating : Top Paste
+      File : Elderly_Wearable_Device.GTP
+
+    Adding Layer      : Top Paste
+
+    Adding Layer      : Top
+
+    Adding Layer      : Multi-Layer
+
+
+Used DCodes :
+    D15
+    D16
+    D17
+    D18
+    D19
+    D20
+    D21
+    D22
+    D23
+    D24
+    D25
+    D26
+    D27
+    D28
+    D29
+    D30
+    D31
+    D32
+    D33
+    D34
+    D35
+    D36
+    D37
+    D38
+    D39
+    D40
+    D41
+    D42
+    D43
+    D44
+    D45
+    D46
+    D47
+    D48
+*************************************************************
+
+*************************************************************
+Generating : Bottom Layer
+      File : Elderly_Wearable_Device.GBL
+
+    Adding Layer      : Bottom Layer
+
+    Adding Layer      : Multi-Layer
+
+
+Used DCodes :
+    D11
+    D12
+    D14
+    D15
+    D43
+    D45
+    D47
+    D48
+    D83
+    D84
+    D87
+    D91
+    D92
+    D93
+    D95
+    D96
+    D97
+    D98
+    D99
+    D100
+    D101
+    D102
+    D103
+    D104
+    D105
+    D106
+    D107
+    D108
+    D109
+    D111
+    D112
+    D113
+    D114
+    D115
+    D116
+    D117
+*************************************************************
+
+*************************************************************
+Generating : PWR
+      File : Elderly_Wearable_Device.G2
+
+    Adding Layer      : PWR
+
+    Adding Layer      : Multi-Layer
+
+
+Used DCodes :
+    D96
+    D98
+    D107
+    D109
+    D110
+*************************************************************
+
+*************************************************************
+Generating : Bottom Overlay
+      File : Elderly_Wearable_Device.GBO
+
+    Adding Layer      : Bottom Overlay
+
+
+Used DCodes :
+    D10
+    D11
+    D12
+    D13
+*************************************************************
+
+*************************************************************
+Generating : Bottom Paste
+      File : Elderly_Wearable_Device.GBP
+
+    Adding Layer      : Bottom Paste
+
+    Adding Layer      : Bottom Layer
+
+    Adding Layer      : Multi-Layer
+
+
+Used DCodes :
+    D15
+    D43
+    D45
+    D47
+    D48
+    D111
+    D112
+    D113
+    D114
+    D115
+    D116
+    D117
+*************************************************************
+
+*************************************************************
+Generating : test-probe
+      File : Elderly_Wearable_Device.GM33
+
+    Adding Layer      : test-probe
+
+
+Used DCodes :
+    D133
+*************************************************************
+
+*************************************************************
+Generating : bDocu
+      File : Elderly_Wearable_Device.GM4
+
+    Adding Layer      : bDocu
+
+
+Used DCodes :
+    D10
+    D13
+*************************************************************
+
+*************************************************************
+Generating : tPlace
+      File : Elderly_Wearable_Device.GM7
+
+    Adding Layer      : tPlace
+
+
+Used DCodes :
+    D129
+*************************************************************
+
+*************************************************************
+Generating : Bottom Pad Master
+      File : Elderly_Wearable_Device.GPB
+
+    Adding Layer      : Bottom Layer
+
+    Adding Layer      : Multi-Layer
+
+
+Used DCodes :
+    D15
+    D43
+    D45
+    D47
+    D48
+    D83
+    D84
+    D87
+    D95
+    D96
+    D97
+    D98
+    D99
+    D100
+    D101
+    D102
+    D103
+    D104
+    D105
+    D106
+    D107
+    D108
+    D111
+    D112
+    D113
+    D114
+    D115
+    D116
+    D117
+*************************************************************
+
+*************************************************************
+Generating : Top Courtyard
+      File : Elderly_Wearable_Device.GM64
+
+    Adding Layer      : Top Courtyard
+
+
+Used DCodes :
+    D134
+*************************************************************
+
+*************************************************************
+Generating : Top 3D Body
+      File : Elderly_Wearable_Device.GM13
+
+    Adding Layer      : Top 3D Body
+
+
+Used DCodes :
+    D10
+    D11
+    D13
+    D14
+    D127
+    D131
+    D132
+*************************************************************
+
+*************************************************************
+Generating : Dimension
+      File : Elderly_Wearable_Device.GM1
+
+    Adding Layer      : Dimension
+
+
+Used DCodes :
+    D125
+*************************************************************
+
