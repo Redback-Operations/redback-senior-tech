@@ -1,0 +1,4 @@
+H1x4
+Testpoint 1mm
+SWD Header ( Bootloader)
+Antenna (DNP)
