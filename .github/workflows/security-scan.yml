@@ -13,15 +13,15 @@ jobs:
   security-scan:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
     - name: Set up Python
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v5
       with:
         python-version: '3.10'
 
     - name: Cache pip packages
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
         path: ~/.cache/pip
         key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
@@ -33,7 +33,7 @@ jobs:
         python -m pip install --upgrade pip
         pip install bandit
 
-    - name: Create amir.py
+    - name: Create and run amir.py
       run: |
         cat << EOF > amir.py
         import os
@@ -211,9 +211,7 @@ jobs:
         if __name__ == "__main__":
             main()
         EOF
-
-    - name: Run security scan
-      run: python amir.py
+        python amir.py
       continue-on-error: true
 
     - name: Check for scan results
@@ -228,59 +226,53 @@ jobs:
           fi
         else
           echo "file_exists=false" >> $GITHUB_OUTPUT
+          echo "No security scan results file found. The scan may have failed." >> security-scan-results.txt
         fi
 
     - name: Upload scan results
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: security-scan-results
         path: security-scan-results.txt
+        if-no-files-found: warn
 
     - name: Comment PR
-      uses: actions/github-script@v6
+      uses: actions/github-script@v7
       if: always()
-      continue-on-error: true
       with:
         github-token: ${{secrets.GITHUB_TOKEN}}
         script: |
           const fs = require('fs');
           
-          async function commentOnPR(comment) {
-            try {
-              await github.rest.issues.createComment({
-                issue_number: context.issue.number,
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                body: comment
-              });
-              console.log('Successfully commented on PR');
-            } catch (error) {
-              console.error('Error commenting on PR:', error.message);
-              core.warning('Failed to comment on PR. This does not affect the security scan results.');
-            }
-          }
-          
           let comment = '## Security Scan Results\n\n';
           
-          if ('${{ steps.check_results.outputs.file_exists }}' === 'true') {
-            try {
+          try {
+            if (fs.existsSync('security-scan-results.txt')) {
               const scanResults = fs.readFileSync('security-scan-results.txt', 'utf8');
               comment += '```\n' + scanResults + '\n```\n\n';
               
               if ('${{ steps.check_results.outputs.vulnerabilities_found }}' === 'true') {
                 comment += '⛔ **Vulnerabilities detected. Please address these issues before merging.**';
-              } else {
+              } else if ('${{ steps.check_results.outputs.file_exists }}' === 'true') {
                 comment += '✅ **No vulnerabilities detected.**';
+              } else {
+                comment += '⚠️ **Error: The security scan failed to complete. Please review the workflow logs for more information.**';
               }
-            } catch (error) {
-              console.error('Error reading scan results:', error.message);
-              comment += '⚠️ **Error: Unable to read security scan results. Please review the workflow logs for more information.**';
+            } else {
+              comment += '⚠️ **Error: No security scan results file found. The scan may have failed. Please review the workflow logs for more information.**';
             }
-          } else {
-            comment += '⚠️ **Error: The security scan failed to complete. Please review the workflow logs for more information.**';
+            
+            await github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: comment
+            });
+            console.log('Successfully commented on PR');
+          } catch (error) {
+            console.error('Error in PR comment process:', error.message);
+            core.setFailed(`Failed to process or post comment: ${error.message}`);
           }
-          
-          await commentOnPR(comment);
 
     - name: Fail if vulnerabilities found or scan failed
       if: steps.check_results.outputs.vulnerabilities_found == 'true' || steps.check_results.outputs.file_exists == 'false'
