@@ -1,9 +1,5 @@
-import subprocess
-import json
 import os
 import re
-import sys
-import argparse
 import ast
 import logging
 from typing import List, Dict, Any
@@ -19,13 +15,21 @@ class AdvancedVulnerabilityScanner:
         self.code_lines: List[str] = []
         self.ast_tree: ast.AST = None
         self.vulnerability_db = self.load_vulnerability_db()
+        self.whitelist = self.load_whitelist()
 
     def load_vulnerability_db(self):
-        # Mock vulnerability database
+        # This could be expanded to load from an actual database
         return {
             'requests': {'2.25.0': ['CVE-2021-12345']},
             'django': {'2.2.0': ['CVE-2021-67890']}
         }
+
+    def load_whitelist(self):
+        # This could be expanded to load from a configuration file
+        return [
+            r'print\(.+\)',  # Whitelist print statements
+            r'logging\..+',  # Whitelist logging statements
+        ]
 
     def parse_file(self):
         logging.info(f"Parsing file: {self.file_path}")
@@ -41,6 +45,11 @@ class AdvancedVulnerabilityScanner:
         return b_mgr.get_issue_list()
 
     def add_vulnerability(self, category: str, description: str, line_number: int, severity: str, confidence: str):
+        if confidence != 'HIGH':
+            return  # Only add high confidence vulnerabilities
+        for pattern in self.whitelist:
+            if re.search(pattern, self.code_lines[line_number-1]):
+                return  # Skip whitelisted patterns
         self.vulnerabilities.append({
             'category': category,
             'description': description,
@@ -54,30 +63,25 @@ class AdvancedVulnerabilityScanner:
         pattern = re.compile(r'(?i)(password|secret|key|token)\s*=\s*["\'][^"\']+["\']')
         for i, line in enumerate(self.code_lines):
             if match := pattern.search(line):
-                self.add_vulnerability('Hardcoded Secret', f"Potential hardcoded secret: {match.group(0)}", i+1, 'HIGH', 'MEDIUM')
+                # Check if it's not just a variable name containing these words
+                if not re.search(r'[A-Z_]+_PASSWORD|[A-Z_]+_SECRET|[A-Z_]+_KEY|[A-Z_]+_TOKEN', match.group(0)):
+                    self.add_vulnerability('Hardcoded Secret', f"Potential hardcoded secret: {match.group(0)}", i+1, 'HIGH', 'HIGH')
 
     def check_sql_injection(self):
-        sql_patterns = [
-            r'(?i)(?:execute|cursor\.execute)\s*\(.*?%s.*?\)',
-            r'(?i)(?:execute|cursor\.execute)\s*\(.*?f["\'].*?\{.*?\}.*?["\'].*?\)'
-        ]
-        for i, line in enumerate(self.code_lines):
-            for pattern in sql_patterns:
-                if re.search(pattern, line):
-                    self.add_vulnerability('SQL Injection', f"Potential SQL injection: {line.strip()}", i+1, 'HIGH', 'HIGH')
+        for node in ast.walk(self.ast_tree):
+            if isinstance(node, ast.Call) and isinstance(node.func, ast.Attribute):
+                if node.func.attr in ['execute', 'raw']:
+                    for arg in node.args:
+                        if isinstance(arg, ast.JoinedStr):
+                            self.add_vulnerability('SQL Injection', f"Potential SQL injection: {ast.get_source_segment(self.code_lines, node)}", node.lineno, 'HIGH', 'HIGH')
 
     def check_xss_vulnerabilities(self):
-        xss_patterns = [
-            r'(?i)render_template_string\s*\(',
-            r'(?i)jinja2\.Template\s*\(',
-            r'(?i)flask\.render_template_string\s*\(',
-            r'(?i)response\.write\(.+\)',
-            r'(?i)print\(.+\)'
-        ]
-        for i, line in enumerate(self.code_lines):
-            for pattern in xss_patterns:
-                if re.search(pattern, line):
-                    self.add_vulnerability('Cross-Site Scripting (XSS)', f"Potential XSS vulnerability: {line.strip()}", i+1, 'HIGH', 'MEDIUM')
+        for node in ast.walk(self.ast_tree):
+            if isinstance(node, ast.Call) and isinstance(node.func, ast.Attribute):
+                if node.func.attr in ['render', 'render_template_string']:
+                    for arg in node.args:
+                        if isinstance(arg, (ast.Name, ast.Attribute)):
+                            self.add_vulnerability('Cross-Site Scripting (XSS)', f"Potential XSS vulnerability: {ast.get_source_segment(self.code_lines, node)}", node.lineno, 'HIGH', 'HIGH')
 
     def check_vulnerable_components(self):
         import_pattern = r'(?:from|import)\s+([\w\.]*)(?:\s+import)?'
@@ -85,10 +89,9 @@ class AdvancedVulnerabilityScanner:
             if match := re.search(import_pattern, line):
                 lib = match.group(1).split('.')[0]
                 if lib in self.vulnerability_db:
-                    self.add_vulnerability('Vulnerable Component', f"Potentially vulnerable library: {lib}", i+1, 'HIGH', 'MEDIUM')
+                    self.add_vulnerability('Vulnerable Component', f"Potentially vulnerable library: {lib}", i+1, 'HIGH', 'HIGH')
 
     def perform_taint_analysis(self):
-        logging.info("Performing taint analysis")
         tainted_vars = set()
         for node in ast.walk(self.ast_tree):
             if isinstance(node, ast.Assign):
@@ -96,62 +99,16 @@ class AdvancedVulnerabilityScanner:
                     if isinstance(target, ast.Name):
                         if isinstance(node.value, ast.Call) and isinstance(node.value.func, ast.Name) and node.value.func.id in ['input', 'request.form.get']:
                             tainted_vars.add(target.id)
-            elif isinstance(node, ast.Name) and node.id in tainted_vars:
-                if isinstance(node.ctx, ast.Load):
-                    self.add_vulnerability('Tainted Variable Usage', f"Potentially tainted variable used: {node.id}", getattr(node, 'lineno', 0), 'MEDIUM', 'MEDIUM')
+            elif isinstance(node, ast.Call) and any(isinstance(arg, ast.Name) and arg.id in tainted_vars for arg in node.args):
+                self.add_vulnerability('Tainted Variable Usage', f"Potentially tainted variable used: {ast.get_source_segment(self.code_lines, node)}", node.lineno, 'HIGH', 'HIGH')
 
     def check_ssrf_vulnerabilities(self):
-        ssrf_patterns = [
-            r'(?i)requests\.get\s*\(',
-            r'(?i)urllib\.request\.urlopen\s*\(',
-            r'(?i)http\.client\.HTTPConnection\s*\('
-        ]
-        for i, line in enumerate(self.code_lines):
-            for pattern in ssrf_patterns:
-                if re.search(pattern, line):
-                    self.add_vulnerability('SSRF', f"Potential SSRF vulnerability: {line.strip()}", i+1, 'HIGH', 'MEDIUM')
-
-    def check_logging_and_monitoring(self):
-        logging_patterns = [
-            r'(?i)logging\.',
-            r'(?i)print\s*\(',
-            r'(?i)sys\.stdout\.write\s*\('
-        ]
-        has_logging = any(re.search(pattern, line) for pattern in logging_patterns for line in self.code_lines)
-        if not has_logging:
-            self.add_vulnerability('Insufficient Logging', "No logging statements found in the file", 0, 'MEDIUM', 'HIGH')
-
-    def check_idor(self):
-        idor_patterns = [
-            r'(?i)request\.args\.get\s*\([\'"].*role.*[\'"]\)',
-            r'(?i)if\s+.*role\s*==\s*[\'"]admin[\'"]'
-        ]
-        for i, line in enumerate(self.code_lines):
-            for pattern in idor_patterns:
-                if re.search(pattern, line):
-                    self.add_vulnerability('Insecure Direct Object Reference', f"Potential IDOR vulnerability: {line.strip()}", i+1, 'HIGH', 'MEDIUM')
-
-    def check_sensitive_data_exposure(self):
-        sensitive_patterns = [
-            r'(?i)os\.environ',
-            r'(?i)send_file\s*\(',
-            r'(?i)open\s*\('
-        ]
-        for i, line in enumerate(self.code_lines):
-            for pattern in sensitive_patterns:
-                if re.search(pattern, line):
-                    self.add_vulnerability('Sensitive Data Exposure', f"Potential sensitive data exposure: {line.strip()}", i+1, 'HIGH', 'MEDIUM')
-
-    def check_insecure_deserialization(self):
-        deser_patterns = [
-            r'(?i)pickle\.loads\s*\(',
-            r'(?i)yaml\.load\s*\(',
-            r'(?i)json\.loads\s*\('
-        ]
-        for i, line in enumerate(self.code_lines):
-            for pattern in deser_patterns:
-                if re.search(pattern, line):
-                    self.add_vulnerability('Insecure Deserialization', f"Potential insecure deserialization: {line.strip()}", i+1, 'HIGH', 'HIGH')
+        for node in ast.walk(self.ast_tree):
+            if isinstance(node, ast.Call) and isinstance(node.func, ast.Attribute):
+                if node.func.attr in ['get', 'post', 'put', 'delete', 'head', 'options', 'patch']:
+                    for arg in node.args:
+                        if isinstance(arg, (ast.Name, ast.Attribute)):
+                            self.add_vulnerability('SSRF', f"Potential SSRF vulnerability: {ast.get_source_segment(self.code_lines, node)}", node.lineno, 'HIGH', 'HIGH')
 
     def analyze(self):
         try:
@@ -162,86 +119,56 @@ class AdvancedVulnerabilityScanner:
             self.check_vulnerable_components()
             self.perform_taint_analysis()
             self.check_ssrf_vulnerabilities()
-            self.check_logging_and_monitoring()
-            self.check_idor()
-            self.check_sensitive_data_exposure()
-            self.check_insecure_deserialization()
-
-            dependency_check_results = run_dependency_check(os.path.dirname(self.file_path))
-            for vuln in dependency_check_results:
-                self.add_vulnerability("Dependency Vulnerability", f"{vuln['name']}: {vuln['description']}", 0, vuln['severity'], "HIGH")
 
             bandit_issues = self.run_bandit()
             for issue in bandit_issues:
-                self.add_vulnerability(f"Bandit: {issue.test_id}", issue.text, issue.lineno, issue.severity, issue.confidence)
+                if issue.confidence == 'HIGH':
+                    self.add_vulnerability(f"Bandit: {issue.test_id}", issue.text, issue.lineno, issue.severity, issue.confidence)
 
             logging.info("Analysis completed successfully")
         except Exception as e:
             logging.error(f"An error occurred during analysis: {str(e)}")
+            raise
 
     def generate_report(self):
-        print(f"Advanced Vulnerability Scan Results for {self.file_path}:")
-        print(f"Total lines of code: {len(self.code_lines)}")
-        print("\nDetected Vulnerabilities:")
+        report = f"Advanced Vulnerability Scan Results for {self.file_path}:\n"
+        report += f"Total lines of code: {len(self.code_lines)}\n\n"
+        report += "Detected Vulnerabilities:\n"
         if not self.vulnerabilities:
-            print("No vulnerabilities detected.")
+            report += "No high-confidence vulnerabilities detected.\n"
         else:
             for vuln in sorted(self.vulnerabilities, key=lambda x: x['severity'], reverse=True):
-                print(f"- {vuln['category']}: {vuln['description']}")
-                print(f"  Severity: {vuln['severity']}, Confidence: {vuln['confidence']}")
+                report += f"- {vuln['category']}: {vuln['description']}\n"
+                report += f"  Severity: {vuln['severity']}, Confidence: {vuln['confidence']}\n"
                 if vuln['line_number'] > 0:
-                    print(f"  Location: Line {vuln['line_number']}")
-                    print(f"  Code: {self.code_lines[vuln['line_number']-1].strip()}")
-                print()
+                    report += f"  Location: Line {vuln['line_number']}\n"
+                    report += f"  Code: {self.code_lines[vuln['line_number']-1].strip()}\n"
+                report += "\n"
+        return report
 
 def scan_file_or_directory(path):
     if os.path.isfile(path):
         scanner = AdvancedVulnerabilityScanner(path)
         scanner.analyze()
-        scanner.generate_report()
+        return scanner.generate_report()
     elif os.path.isdir(path):
+        full_report = ""
         for root, dirs, files in os.walk(path):
             for file in files:
                 if file.endswith('.py'):
                     file_path = os.path.join(root, file)
-                    print(f"\nScanning: {file_path}")
                     scanner = AdvancedVulnerabilityScanner(file_path)
                     scanner.analyze()
-                    scanner.generate_report()
+                    full_report += scanner.generate_report() + "\n\n"
+        return full_report
     else:
-        print(f"Error: {path} is not a valid file or directory.")
-
-def run_dependency_check(project_path):
-    cmd = f"dependency-check --scan {project_path} --format JSON --out dependency-check-report.json"
-    try:
-        subprocess.run(cmd, shell=True, check=True)
-        
-        with open('dependency-check-report.json', 'r') as f:
-            report = json.load(f)
-        
-        vulnerabilities = []
-        for dependency in report.get('dependencies', []):
-            for vulnerability in dependency.get('vulnerabilities', []):
-                vulnerabilities.append({
-                    'description': vulnerability.get('description', ''),
-                    'severity': vulnerability.get('severity', 'UNKNOWN'),
-                    'name': vulnerability.get('name', '')
-                })
-        
-        return vulnerabilities
-    except subprocess.CalledProcessError:
-        logging.error("Dependency-Check failed to run. Ensure it's properly installed and in your PATH.")
-        return []
-    except FileNotFoundError:
-        logging.error("Dependency-Check report not found. Ensure Dependency-Check is running correctly.")
-        return []
+        return f"Error: {path} is not a valid file or directory."
 
 def main():
-    parser = argparse.ArgumentParser(description="Advanced Vulnerability Scanner")
-    parser.add_argument("path", help="Path to the Python file or directory to scan")
-    args = parser.parse_args()
-
-    scan_file_or_directory(args.path)
+    path = "."  # Scan the entire repository
+    report = scan_file_or_directory(path)
+    with open('security-scan-results.txt', 'w') as f:
+        f.write(report)
 
 if __name__ == "__main__":
     main()
