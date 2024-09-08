@@ -1,5 +1,0 @@
-This is where the files for the LCD module was downloaded from:
-
-https://www.waveshare.com/wiki/1.69inch_LCD_Module#Arduino
-
-https://www.waveshare.com/wiki/Image_Extraction

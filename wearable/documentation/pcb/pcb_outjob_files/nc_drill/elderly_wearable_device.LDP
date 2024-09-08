@@ -1,7 +1,0 @@
-Layer Pairs Export File for PCB: G:\UNI\Bachelor degree - IT\Year 3\T2\SIT378\Redback Operations\The Work\Elderly_Wearable_Device\Elderly_Wearable_Device.PcbDoc
-LayersSetName=Top_Bot_Thru_Holes|DrillFile=elderly_wearable_device.txt|DrillLayers=gtl,g1,g2,gbl
-LayersSetName=Top_Bot_Rect_Holes|DrillFile=elderly_wearable_device-rectholes.txt|DrillLayers=gtl,g1,g2,gbl
-LayersSetName=Top_GND_Blind_Vias|DrillFile=elderly_wearable_device.tx1|DrillLayers=gtl,g1
-LayersSetName=Top_PWR_Blind_Vias|DrillFile=elderly_wearable_device.tx2|DrillLayers=gtl,g1,g2
-LayersSetName=GND_Bot_Blind_Vias|DrillFile=elderly_wearable_device.tx3|DrillLayers=g1,g2,gbl
-LayersSetName=PWR_Bot_Blind_Vias|DrillFile=elderly_wearable_device.tx4|DrillLayers=g2,gbl
