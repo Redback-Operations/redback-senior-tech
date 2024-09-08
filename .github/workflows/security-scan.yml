@@ -33,6 +33,11 @@ jobs:
         python -m pip install --upgrade pip
         pip install bandit
 
+    - name: Display Python version and installed packages
+      run: |
+        python --version
+        pip list
+
     - name: Create and run amir.py
       run: |
         cat << EOF > amir.py
@@ -40,6 +45,7 @@ jobs:
         import re
         import ast
         import logging
+        import traceback
         from typing import List, Dict, Any
         import bandit
         from bandit.core import manager as bandit_manager
@@ -56,17 +62,15 @@ jobs:
                 self.whitelist = self.load_whitelist()
 
             def load_vulnerability_db(self):
-                # This could be expanded to load from an actual database
                 return {
                     'requests': {'2.25.0': ['CVE-2021-12345']},
                     'django': {'2.2.0': ['CVE-2021-67890']}
                 }
 
             def load_whitelist(self):
-                # This could be expanded to load from a configuration file
                 return [
-                    r'print\(.+\)',  # Whitelist print statements
-                    r'logging\..+',  # Whitelist logging statements
+                    r'print\(.+\)',
+                    r'logging\..+',
                 ]
 
             def parse_file(self):
@@ -84,10 +88,10 @@ jobs:
 
             def add_vulnerability(self, category: str, description: str, line_number: int, severity: str, confidence: str):
                 if confidence != 'HIGH':
-                    return  # Only add high confidence vulnerabilities
+                    return
                 for pattern in self.whitelist:
                     if re.search(pattern, self.code_lines[line_number-1]):
-                        return  # Skip whitelisted patterns
+                        return
                 self.vulnerabilities.append({
                     'category': category,
                     'description': description,
@@ -101,7 +105,6 @@ jobs:
                 pattern = re.compile(r'(?i)(password|secret|key|token)\s*=\s*["\'][^"\']+["\']')
                 for i, line in enumerate(self.code_lines):
                     if match := pattern.search(line):
-                        # Check if it's not just a variable name containing these words
                         if not re.search(r'[A-Z_]+_PASSWORD|[A-Z_]+_SECRET|[A-Z_]+_KEY|[A-Z_]+_TOKEN', match.group(0)):
                             self.add_vulnerability('Hardcoded Secret', f"Potential hardcoded secret: {match.group(0)}", i+1, 'HIGH', 'HIGH')
 
@@ -203,15 +206,26 @@ jobs:
                 return f"Error: {path} is not a valid file or directory."
 
         def main():
-            path = "."  # Scan the entire repository
-            report = scan_file_or_directory(path)
-            with open('security-scan-results.txt', 'w') as f:
-                f.write(report)
+            try:
+                path = "."  # Scan the entire repository
+                report = scan_file_or_directory(path)
+                with open('security-scan-results.txt', 'w') as f:
+                    f.write(report)
+                print("Security scan completed successfully")
+            except Exception as e:
+                error_message = f"Error during security scan: {str(e)}\n\nTraceback:\n{traceback.format_exc()}"
+                print(error_message)
+                with open('security-scan-results.txt', 'w') as f:
+                    f.write(error_message)
 
         if __name__ == "__main__":
             main()
         EOF
         python amir.py
+      continue-on-error: true
+
+    - name: Display contents of security-scan-results.txt
+      run: cat security-scan-results.txt
       continue-on-error: true
 
     - name: Check for scan results
