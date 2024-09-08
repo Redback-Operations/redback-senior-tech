@@ -7,16 +7,16 @@ on:
 permissions:
   contents: read
   pull-requests: write
-  issues: write
 
 jobs:
   security-scan:
     runs-on: ubuntu-latest
+    permissions: write-all  # This line grants all write permissions to the job
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v3
 
     - name: Set up Python
-      uses: actions/setup-python@v5
+      uses: actions/setup-python@v4
       with:
         python-version: '3.10'
 
@@ -49,17 +49,15 @@ jobs:
                 self.whitelist = self.load_whitelist()
 
             def load_vulnerability_db(self):
-                # This could be expanded to load from an actual database
                 return {
                     'requests': {'2.25.0': ['CVE-2021-12345']},
                     'django': {'2.2.0': ['CVE-2021-67890']}
                 }
 
             def load_whitelist(self):
-                # This could be expanded to load from a configuration file
                 return [
-                    r'print\(.+\)',  # Whitelist print statements
-                    r'logging\..+',  # Whitelist logging statements
+                    r'print\(.+\)',
+                    r'logging\..+',
                 ]
 
             def parse_file(self):
@@ -85,11 +83,11 @@ jobs:
 
             def add_vulnerability(self, category: str, description: str, line_number: int, severity: str, confidence: str):
                 if confidence != 'HIGH':
-                    return  # Only add high confidence vulnerabilities
+                    return
                 if line_number > 0 and line_number <= len(self.code_lines):
                     for pattern in self.whitelist:
                         if re.search(pattern, self.code_lines[line_number-1]):
-                            return  # Skip whitelisted patterns
+                            return
                 self.vulnerabilities.append({
                     'category': category,
                     'description': description,
@@ -103,7 +101,6 @@ jobs:
                 pattern = re.compile(r'(?i)(password|secret|key|token)\s*=\s*["\'][^"\']+["\']')
                 for i, line in enumerate(self.code_lines):
                     if match := pattern.search(line):
-                        # Check if it's not just a variable name containing these words
                         if not re.search(r'[A-Z_]+_PASSWORD|[A-Z_]+_SECRET|[A-Z_]+_KEY|[A-Z_]+_TOKEN', match.group(0)):
                             self.add_vulnerability('Hardcoded Secret', f"Potential hardcoded secret: {match.group(0)}", i+1, 'HIGH', 'HIGH')
 
@@ -249,14 +246,14 @@ jobs:
         fi
 
     - name: Upload scan results
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v3
       with:
         name: security-scan-results
         path: security-scan-results.txt
         if-no-files-found: warn
 
     - name: Comment PR
-      uses: actions/github-script@v7
+      uses: actions/github-script@v6
       if: always()
       with:
         github-token: ${{secrets.GITHUB_TOKEN}}
