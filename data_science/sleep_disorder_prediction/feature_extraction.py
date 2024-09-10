@@ -53,9 +53,12 @@ class PPGFeatureExtractor:
     def inflection_points(self):
         """Find inflection points in the PPG signal."""
         inflections = []
-        for i in range(1, len(self.ppg_signal)-1):
-            if (self.ppg_signal[i-1] < self.ppg_signal[i] > self.ppg_signal[i+1])
-            or (self.ppg_signal[i-1] > self.ppg_signal[i] < self.ppg_signal[i+1]):
+        signal = self.ppg_signal
+        for i in range(1, len(signal) - 1):
+            prev = signal[i - 1]
+            curr = signal[i]
+            next = signal[i + 1]
+            if (prev < curr > next) or (prev > curr < next):
                 inflections.append(i)
         return inflections
 
