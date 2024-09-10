@@ -35,9 +35,11 @@ class PPGFeatureExtractor:
 
     def calculate_areas(self, signal, inflection_indices):
         """Calculate systolic and diastolic areas."""
-        area_sys = simps(signal[inflection_indices[:len(inflection_indices)//2]], 
+        area_sys = simps(signal[inflection_indices
+                         [:len(inflection_indices)//2]],
                          dx=1/self.sampling_rate)
-        area_dias = simps(signal[inflection_indices[len(inflection_indices)//2:]],
+        area_dias = simps(signal[inflection_indices
+                          [len(inflection_indices)//2:]],
                           dx=1/self.sampling_rate)
         return area_sys, area_dias
 
@@ -143,7 +145,7 @@ class PPGFeatureExtractor:
                                   / hjorth_activity)
         hjorth_complexity = np.sqrt(np.var(np.gradient
                                            (np.gradient(self.ppg_signal)))
-                                    / np.var(np.gradient(self.ppg_signal)) 
+                                    / np.var(np.gradient(self.ppg_signal))
                                     / hjorth_mobility)
 
         poincare_sd1 = np.std(np.diff(self.pp_intervals)) / np.sqrt(2)
@@ -152,7 +154,8 @@ class PPGFeatureExtractor:
 
         hurst_exp = nolds.hurst_rs(self.ppg_signal)
         dfa_alpha = nolds.dfa(self.ppg_signal)
-        lyapunov_exp = nolds.lyap_r(self.ppg_signal, emb_dim=6)  # Embedding dimension 6
+        lyapunov_exp = nolds.lyap_r(self.ppg_signal
+                                    , emb_dim=6)
 
         # Robust Statistical Features
         mad_pp_amp = mad(self.pp_intervals)
@@ -172,7 +175,7 @@ class PPGFeatureExtractor:
         lf_power = np.sum(fft_amplitudes[lf_band]**2)
         hf_power = np.sum(fft_amplitudes[hf_band]**2)
         lf_hf_ratio = lf_power / hf_power if hf_power != 0 else np.nan
-        
+
         # Feature Dictionary
         features = {
             # Peak-to-Peak Features
@@ -187,7 +190,7 @@ class PPGFeatureExtractor:
             "AVpw": mean_pulse_width, "SDpw": sd_pulse_width,
             "SDSDpw": sdsd_pw, "RMSSDpw": rmssd_pw,
             "Maxpw": max_pw, "Minpw": min_pw,
-            "Medianpw": median_pw, "Skewpw": skew_pw, 
+            "Medianpw": median_pw, "Skewpw": skew_pw,
             "Kurtosispw": kurt_pw, "MADpw": mad_pw, "IQRpw": iqr_pw,
 
             # Systolic and Diastolic Area Features
