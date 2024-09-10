@@ -154,8 +154,8 @@ class PPGFeatureExtractor:
 
         hurst_exp = nolds.hurst_rs(self.ppg_signal)
         dfa_alpha = nolds.dfa(self.ppg_signal)
-        lyapunov_exp = nolds.lyap_r(self.ppg_signal
-                                    , emb_dim=6)
+        lyapunov_exp = nolds.lyap_r(self.ppg_signal,
+                                    emb_dim=6)
 
         # Robust Statistical Features
         mad_pp_amp = mad(self.pp_intervals)
@@ -165,8 +165,8 @@ class PPGFeatureExtractor:
 
         # Frequency Domain Features (Using FFT)
         fft_signal = np.fft.fft(self.ppg_signal)
-        fft_freqs = np.fft.fftfreq(len(self.ppg_signal)
-                                   , d=1/self.sampling_rate)
+        fft_freqs = np.fft.fftfreq(len(self.ppg_signal),
+                                   d=1/self.sampling_rate)
         fft_amplitudes = np.abs(fft_signal)
 
         total_power = np.sum(fft_amplitudes**2)
