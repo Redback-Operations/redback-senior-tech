@@ -1,16 +1,15 @@
 import numpy as np
 import scipy.stats as stats
 from scipy.signal import find_peaks
-from scipy.linalg import svd
 from statsmodels.robust import mad
 import nolds
 from scipy.integrate import simps
-import pandas as pd
+
 
 class PPGFeatureExtractor:
     def __init__(self, ppg_signal, sampling_rate=100):
         """
-        Initialize the PPGFeatureExtractor with the raw PPG signal and sampling rate.
+        Initialize the PPGFeatureExtractor.
 
         Parameters:
         ppg_signal (array-like): The raw PPG signal data.
@@ -21,23 +20,25 @@ class PPGFeatureExtractor:
         self.peaks, _ = find_peaks(self.ppg_signal)
         self.troughs, _ = find_peaks(-self.ppg_signal)
         self.pp_intervals = np.diff(self.peaks) / sampling_rate
-        
+
     def rms(self, x):
         """Calculate the Root Mean Square (RMS) of an array."""
         return np.sqrt(np.mean(x**2))
 
     def calculate_sdsd(self, x):
-        """Calculate the Standard Deviation of Successive Differences (SDSD) of an array."""
+        """Calculate the Standard Deviation of Successive Differences"""
         return np.std(np.diff(x))
 
     def calculate_rmssd(self, x):
-        """Calculate the Root Mean Square of Successive Differences (RMSSD) of an array."""
+        """Calculate Root Mean Square of Successive Differences (RMSSD)"""
         return np.sqrt(np.mean(np.diff(x)**2))
 
     def calculate_areas(self, signal, inflection_indices):
-        """Calculate systolic and diastolic areas using the trapezoidal rule."""
-        area_sys = simps(signal[inflection_indices[:len(inflection_indices)//2]], dx=1/self.sampling_rate)
-        area_dias = simps(signal[inflection_indices[len(inflection_indices)//2:]], dx=1/self.sampling_rate)
+        """Calculate systolic and diastolic areas."""
+        area_sys = simps(signal[inflection_indices[:len(inflection_indices)//2]], 
+                         dx=1/self.sampling_rate)
+        area_dias = simps(signal[inflection_indices[len(inflection_indices)//2:]],
+                          dx=1/self.sampling_rate)
         return area_sys, area_dias
 
     def calculate_pulse_width(self):
@@ -45,17 +46,19 @@ class PPGFeatureExtractor:
         widths = []
         for i in range(len(self.peaks) - 1):
             if i < len(self.troughs) and self.peaks[i] < self.troughs[i]:
-                widths.append((self.troughs[i] - self.peaks[i]) / self.sampling_rate)
+                widths.append((self.troughs[i] - self.peaks[i])
+                              / self.sampling_rate)
         return np.array(widths)
 
     def inflection_points(self):
         """Find inflection points in the PPG signal."""
         inflections = []
         for i in range(1, len(self.ppg_signal)-1):
-            if (self.ppg_signal[i-1] < self.ppg_signal[i] > self.ppg_signal[i+1]) or (self.ppg_signal[i-1] > self.ppg_signal[i] < self.ppg_signal[i+1]):
+            if (self.ppg_signal[i-1] < self.ppg_signal[i] > self.ppg_signal[i+1])
+            or (self.ppg_signal[i-1] > self.ppg_signal[i] < self.ppg_signal[i+1]):
                 inflections.append(i)
         return inflections
-    
+
     def higuchi_fd(self, x, kmax=5):
         """Calculate Higuchi Fractal Dimension (HFD) of a time series."""
         N = len(x)
@@ -107,19 +110,25 @@ class PPGFeatureExtractor:
         # Systolic and Diastolic Areas
         inflection_indices = self.inflection_points()
         if len(inflection_indices) >= 2:
-            area_sys, area_dias = self.calculate_areas(self.ppg_signal, inflection_indices)
+            area_sys, area_dias = self.calculate_areas(self.ppg_signal,
+                                                       inflection_indices)
             mean_area = (area_sys + area_dias) / 2
             std_area = np.std([area_sys, area_dias])
             meanIPAR = area_sys / area_dias
             stdIPAR = np.std(meanIPAR)
         else:
-            area_sys = area_dias = mean_area = std_area = meanIPAR = stdIPAR = np.nan
+            area_sys = area_dias = mean_area = np.nan
+            std_area = meanIPAR = stdIPAR = np.nan
 
         # Systolic and Diastolic Times
-        mean_t1 = np.mean(np.diff(self.peaks[:len(self.peaks)//2]) / self.sampling_rate)
-        std_t1 = np.std(np.diff(self.peaks[:len(self.peaks)//2]) / self.sampling_rate)
-        mean_t2 = np.mean(np.diff(self.peaks[len(self.peaks)//2:]) / self.sampling_rate)
-        std_t2 = np.std(np.diff(self.peaks[len(self.peaks)//2:]) / self.sampling_rate)
+        mean_t1 = np.mean(np.diff(self.peaks[:len(self.peaks)//2])
+                          / self.sampling_rate)
+        std_t1 = np.std(np.diff(self.peaks[:len(self.peaks)//2])
+                        / self.sampling_rate)
+        mean_t2 = np.mean(np.diff(self.peaks[len(self.peaks)//2:])
+                          / self.sampling_rate)
+        std_t2 = np.std(np.diff(self.peaks[len(self.peaks)//2:])
+                        / self.sampling_rate)
 
         # Inflection Point Time Ratio (IPTR)
         mean_iptr = mean_t1 / mean_t2 if mean_t2 != 0 else np.nan
@@ -127,11 +136,16 @@ class PPGFeatureExtractor:
 
         # Nonlinear Features
         hjorth_activity = np.var(self.ppg_signal)
-        hjorth_mobility = np.sqrt(np.var(np.gradient(self.ppg_signal)) / hjorth_activity)
-        hjorth_complexity = np.sqrt(np.var(np.gradient(np.gradient(self.ppg_signal))) / np.var(np.gradient(self.ppg_signal)) / hjorth_mobility)
+        hjorth_mobility = np.sqrt(np.var(np.gradient(self.ppg_signal))
+                                  / hjorth_activity)
+        hjorth_complexity = np.sqrt(np.var(np.gradient
+                                           (np.gradient(self.ppg_signal)))
+                                    / np.var(np.gradient(self.ppg_signal)) 
+                                    / hjorth_mobility)
 
         poincare_sd1 = np.std(np.diff(self.pp_intervals)) / np.sqrt(2)
-        poincare_sd2 = np.sqrt(2 * np.std(self.pp_intervals)**2 - poincare_sd1**2)
+        poincare_sd2 = np.sqrt(2 * np.std(self.pp_intervals)**2
+                               - poincare_sd1**2)
 
         hurst_exp = nolds.hurst_rs(self.ppg_signal)
         dfa_alpha = nolds.dfa(self.ppg_signal)
@@ -145,7 +159,8 @@ class PPGFeatureExtractor:
 
         # Frequency Domain Features (Using FFT)
         fft_signal = np.fft.fft(self.ppg_signal)
-        fft_freqs = np.fft.fftfreq(len(self.ppg_signal), d=1/self.sampling_rate)
+        fft_freqs = np.fft.fftfreq(len(self.ppg_signal)
+                                   , d=1/self.sampling_rate)
         fft_amplitudes = np.abs(fft_signal)
 
         total_power = np.sum(fft_amplitudes**2)
@@ -154,36 +169,48 @@ class PPGFeatureExtractor:
         lf_power = np.sum(fft_amplitudes[lf_band]**2)
         hf_power = np.sum(fft_amplitudes[hf_band]**2)
         lf_hf_ratio = lf_power / hf_power if hf_power != 0 else np.nan
-
-        # Feature Dictionary 
+        
+        # Feature Dictionary
         features = {
             # Peak-to-Peak Features
-            "AVppAmp": av_pp_amp, "SDppAmp": sd_pp_amp, "SDSDppAmp": sdsd_pp_amp, "RMSSDppAmp": rmssd_pp_amp,
-            "MaxppAmp": max_pp_amp, "MinppAmp": min_pp_amp, "MedianppAmp": median_pp_amp, "SkewppAmp": skew_pp_amp, 
-            "KurtosisppAmp": kurt_pp_amp, "MADppAmp": mad_pp_amp, "IQRppAmp": iqr_pp_amp,
+            "AVppAmp": av_pp_amp, "SDppAmp": sd_pp_amp, "SDSDppAmp":
+            sdsd_pp_amp, "RMSSDppAmp": rmssd_pp_amp,
+            "MaxppAmp": max_pp_amp, "MinppAmp": min_pp_amp,
+            "MedianppAmp": median_pp_amp, "SkewppAmp": skew_pp_amp,
+            "KurtosisppAmp": kurt_pp_amp,
+            "MADppAmp": mad_pp_amp, "IQRppAmp": iqr_pp_amp,
 
             # Pulse Width Features
-            "AVpw": mean_pulse_width, "SDpw": sd_pulse_width, "SDSDpw": sdsd_pw, "RMSSDpw": rmssd_pw,
-            "Maxpw": max_pw, "Minpw": min_pw, "Medianpw": median_pw, "Skewpw": skew_pw, 
+            "AVpw": mean_pulse_width, "SDpw": sd_pulse_width,
+            "SDSDpw": sdsd_pw, "RMSSDpw": rmssd_pw,
+            "Maxpw": max_pw, "Minpw": min_pw,
+            "Medianpw": median_pw, "Skewpw": skew_pw, 
             "Kurtosispw": kurt_pw, "MADpw": mad_pw, "IQRpw": iqr_pw,
 
             # Systolic and Diastolic Area Features
-            "meanA1": area_sys, "meanA2": area_dias, "meanArea": mean_area, "stdArea": std_area,
+            "meanA1": area_sys, "meanA2": area_dias,
+            "meanArea": mean_area, "stdArea": std_area,
             "MeanIPAR": meanIPAR, "StdIPAR": stdIPAR,
 
             # Systolic and Diastolic Times
-            "meanT1": mean_t1, "stdT1": std_t1, "meanT2": mean_t2, "stdT2": std_t2,
+            "meanT1": mean_t1, "stdT1": std_t1,
+            "meanT2": mean_t2, "stdT2": std_t2,
 
             # Inflection Point Time Ratio (IPTR)
             "meanIPTR": mean_iptr, "stdIPTR": std_iptr,
 
             # Nonlinear Features
-            "HjorthActivity": hjorth_activity, "HjorthMobility": hjorth_mobility, "HjorthComplexity": hjorth_complexity,
-            "PoincareSD1": poincare_sd1, "PoincareSD2": poincare_sd2, "HurstExp": hurst_exp, 
-            "DFAAlpha": dfa_alpha, "LyapunovExp": lyapunov_exp, 
-            "HFD": self.higuchi_fd(self.ppg_signal, 5), "HFD_cardio": self.higuchi_fd(self.pp_intervals, 5),
+            "HjorthActivity": hjorth_activity,
+            "HjorthMobility": hjorth_mobility,
+            "HjorthComplexity": hjorth_complexity,
+            "PoincareSD1": poincare_sd1, "PoincareSD2": poincare_sd2,
+            "HurstExp": hurst_exp,
+            "DFAAlpha": dfa_alpha, "LyapunovExp": lyapunov_exp,
+            "HFD": self.higuchi_fd(self.ppg_signal, 5),
+            "HFD_cardio": self.higuchi_fd(self.pp_intervals, 5),
 
             # Frequency Domain Features
-            "TotalPower": total_power, "LFPower": lf_power, "HFPower": hf_power, "LFHFRatio": lf_hf_ratio,
+            "TotalPower": total_power, "LFPower": lf_power,
+            "HFPower": hf_power, "LFHFRatio": lf_hf_ratio,
         }
         return features
