@@ -1,12 +1,53 @@
 import numpy as np
-import scipy.stats as stats
+from scipy import stats, signal, integrate
+from scipy.integrate import simps
 from scipy.signal import find_peaks
 from statsmodels.robust import mad
 import nolds
-from scipy.integrate import simps
-
 
 class PPGFeatureExtractor:
+    """
+    A class used to extract various features from a raw PPG signal.
+
+    This class provides methods to calculate features from PPG signals,
+    including peak-to-peak interval features, pulse width features,
+    systolic and diastolic area features, nonlinear features,
+    and frequency domain features. It also provides robust statistical
+    measures and time-domain morphology analysis.
+
+    Attributes
+    ----------
+    ppg_signal : np.ndarray
+        The raw PPG signal as a NumPy array.
+    sampling_rate : int
+        The sampling rate of the PPG signal, in Hz.
+
+    Methods
+    -------
+    rms(x):
+        Computes the Root Mean Square (RMS) value of a signal.
+    calculate_sdsd(x):
+        Calculates the Standard Deviation of
+        Successive Differences (SDSD) of a signal.
+    calculate_rmssd(x):
+        Computes the Root Mean Square of Successive Differences
+        (RMSSD) of a signal.
+    calculate_areas(signal, inflection_indices):
+        Calculates the systolic and diastolic areas of the
+        PPG signal based on inflection points.
+    calculate_pulse_width(peaks, troughs, sampling_rate):
+        Computes the pulse width (time between peaks and troughs)
+        from a PPG signal.
+    inflection_points(signal):
+        Identifies inflection points in the PPG signal.
+    higuchi_fd(x, kmax):
+        Calculates the Higuchi Fractal Dimension (HFD) of a time series.
+    extract_features():
+        Extracts a comprehensive set of features from the PPG signal,
+        including peak-to-peak intervals, pulse width, areas,
+        systolic and diastolic times, nonlinear, and frequency domain features.
+
+    """
     def __init__(self, ppg_signal, sampling_rate=100):
         """
         Initialize the PPGFeatureExtractor.
@@ -59,31 +100,31 @@ class PPGFeatureExtractor:
         for i in range(1, len(signal) - 1):
             prev = signal[i - 1]
             curr = signal[i]
-            next = signal[i + 1]
-            if (prev < curr > next) or (prev > curr < next):
+            next_point = signal[i + 1]
+            if (prev < curr > next_point) or (prev > curr < next_point):
                 inflections.append(i)
         return inflections
 
     def higuchi_fd(self, x, kmax=5):
         """Calculate Higuchi Fractal Dimension (HFD) of a time series."""
-        N = len(x)
-        Lk = np.zeros(kmax)
+        n = len(x)
+        lk = np.zeros(kmax)
 
         for k in range(1, kmax + 1):
-            Lm = np.zeros((k,))
+            lm = np.zeros((k,))
 
             for m in range(0, k):
-                Lmk = 0
-                for i in range(1, int(np.floor((N - m) / k))):
-                    Lmk += abs(x[m + i * k] - x[m + (i - 1) * k])
-                Lm[m] = (Lmk * (N - 1) / (k * np.floor((N - m) / k)))
+                lmk = 0
+                for i in range(1, int(np.floor((n - m) / k))):
+                    lmk += abs(x[m + i * k] - x[m + (i - 1) * k])
+                lm[m] = (lmk * (n - 1) / (k * np.floor((n - m) / k)))
 
-            Lk[k - 1] = np.sum(Lm) / k
+            lk[k - 1] = np.sum(lm) / k
 
         # Perform linear regression to find the slope (fractal dimension)
-        Lk_log = np.log(Lk)
+        lk_log = np.log(lk)
         k_log = np.log(range(1, kmax + 1))
-        higuchi, _ = np.polyfit(k_log, Lk_log, 1)
+        higuchi, _ = np.polyfit(k_log, lk_log, 1)
 
         return higuchi
 
@@ -119,11 +160,11 @@ class PPGFeatureExtractor:
                                                        inflection_indices)
             mean_area = (area_sys + area_dias) / 2
             std_area = np.std([area_sys, area_dias])
-            meanIPAR = area_sys / area_dias
-            stdIPAR = np.std(meanIPAR)
+            meanipar = area_sys / area_dias
+            stdipar = np.std(meanipar)
         else:
             area_sys = area_dias = mean_area = np.nan
-            std_area = meanIPAR = stdIPAR = np.nan
+            std_area = meanipar = stdipar = np.nan
 
         # Systolic and Diastolic Times
         mean_t1 = np.mean(np.diff(self.peaks[:len(self.peaks)//2])
@@ -196,7 +237,7 @@ class PPGFeatureExtractor:
             # Systolic and Diastolic Area Features
             "meanA1": area_sys, "meanA2": area_dias,
             "meanArea": mean_area, "stdArea": std_area,
-            "MeanIPAR": meanIPAR, "StdIPAR": stdIPAR,
+            "MeanIPAR": meanipar, "StdIPAR": stdipar,
 
             # Systolic and Diastolic Times
             "meanT1": mean_t1, "stdT1": std_t1,
