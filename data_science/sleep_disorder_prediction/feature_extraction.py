@@ -1,9 +1,10 @@
 import numpy as np
-from scipy import stats, signal, integrate
+from scipy import stats
 from scipy.integrate import simps
 from scipy.signal import find_peaks
 from statsmodels.robust import mad
 import nolds
+
 
 class PPGFeatureExtractor:
     """
