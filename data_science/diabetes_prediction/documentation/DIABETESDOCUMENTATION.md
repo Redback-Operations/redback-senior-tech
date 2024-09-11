@@ -20,6 +20,23 @@ As part of the work, we researched diabetes, symptoms, diagnosis thresholds in o
 
 We also looked at finding data that had prediabetes, as being able to predict prior to diagnosis of diabetes could lead to better health outcomes, and potentially enable prevention or delay of developing diabetes.
 
+Definitions and glossary of terms:
+For further info, refer to the GLUCOSEMONITORINGRESEARCH.md file
+- Blood Glucose Level (BGL) 
+- Blood Glucose - level of glucose in your blood.
+- HbA1c (also known as 'glycated heamoglobin).  Does not require fasting or prep; tests the amount of glycated haemoglobin.
+- Fasting - inital blood glucose level taken, after not eating for 12 hours prior (generally)
+- 2 hr glucose - blood glucose level taken at 2hrs after fasting, after having consumed a specificied glucose solution. 
+- Random - Random time blood test.
+- Oral glucose tolerance test - a test where a patient fasts for 
+- Target Range - the specified BGL target range
+- Time in Target - time BGL is in target range
+- Finger prick - device to piece finger (lancet) to extract blood drop
+- Flash Glucose - continuous blood glucose monitor that reads and transmits continuously
+- Glucose monitor - can be used to take blood glucose from a finger prick and strip, singular reading per strip, not continuous
+- Hypoglycaemia (also known as 'hypos') - BGL below 4mmol/L
+- Hyperglycaemia - BGL above 15mmol/L
+
 Diagnostic criteria for diabetes:
 - Diagnostic criteria for Diabetes as per Australian Diabetes Society, 'Clinical Guidelines, HbA1c for Diagnosis of Diabetes Mellitus (May 2023)' [^5] is: 
     - 1. HbA1c ≥6.5% (48 mmol/mol) 
