@@ -36,7 +36,7 @@ Adafruit_BME680 bme;
 DFRobot_MAX30102 particleSensor;
 RTCZero rtc;
 int status = WL_IDLE_STATUS;
-const int GMT = +10;// Time zone constant (Melbourne Australia)
+const int GMT = +10; // Time zone constant (Melbourne, Australia)
 
 // WiFi and Firebase Configuration
 WiFiClient  client;
@@ -205,7 +205,9 @@ void checkVibrations(float &x, float &y, float &z) {
 }
 
 void DisplayTime() {
-  tft.fillScreen(ST77XX_BLACK);
+  // Draw gradient background
+  drawGradientBackground(); 
+
   tft.setTextColor(ST77XX_WHITE);
   tft.setTextSize(2);
   
@@ -248,7 +250,7 @@ void DisplaySensorData(float temperature, float humidity, float pressure, float 
 
   tft.setTextColor(ST77XX_WHITE);
   tft.setTextSize(1);
-
+  
   tft.setCursor(10, 20);
   tft.print("Temp: "); tft.print(temperature); tft.println(" C");
   tft.setCursor(10, 40);
@@ -273,9 +275,10 @@ void DisplaySensorData(float temperature, float humidity, float pressure, float 
   }
 }
 
-
 void DisplayHeartData(int32_t SPO2, int32_t heartRate) {
-  tft.fillScreen(ST77XX_BLACK);
+  // Draw gradient background
+  drawGradientBackground(); 
+
   tft.setTextColor(ST77XX_WHITE);
   tft.setTextSize(2);
 
@@ -300,4 +303,15 @@ void DisplayWarning(String message) {
   tft.setTextSize(3);
   tft.setCursor(20, 120);
   tft.print(message);
+}
+
+// Function to create a simple gradient background
+void drawGradientBackground() {
+  uint16_t color;
+  
+  for (int y = 0; y < 240; y++) {
+    // Create a color gradient from red to blue
+    color = tft.color565(y, 0, 255 - y);  // Red -> Blue gradient
+    tft.drawFastHLine(0, y, 280, color);  // Draw a horizontal line of this color
+  }
 }
