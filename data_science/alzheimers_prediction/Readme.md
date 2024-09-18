@@ -1,32 +1,78 @@
-ALZEHEIMER"S DISEASE 
 
-Introduction
+# Alzheimer's Disease Prediction Notebook
 
-Alzheimer's disease is a brain disorder that gradually destroys memory and thinking skills and eventually the ability to carry out simple tasks. It is the most common cause of dementia among older adults. The disease involves a buildup of proteins in the brain, leading to the death of brain cells. There is no cure, but treatments can help manage symptoms and improve quality of life.
+## Overview
+This notebook is designed to predict Alzheimer's disease using machine learning models. It performs data preprocessing, feature engineering, model training, evaluation, and visualization. The dataset includes clinical and neuroimaging data, and the goal is to predict the onset or progression of Alzheimer's disease.
 
-Aim
+## Requirements
+- Python 3.x
+- Libraries:
+  - NumPy
+  - Pandas
+  - Scikit-learn
+  - Matplotlib/Seaborn
+  - SMOTE from imblearn (for handling class imbalance)
+  - Optionally: XGBoost or SHAP for further improvements
 
-The main objective our model is to predict the onset and progression of Alzheimer's disease using a combination of clinical assessments, neuroimaging data, and demographic information. By accurately identifying individuals at risk and monitoring the progression of the disease.
+Install the necessary libraries using:
+```bash
+pip install numpy pandas scikit-learn matplotlib seaborn imbalanced-learn
+```
 
-Dataset Description 
+## Structure of the Notebook
 
-The dataset includes clinical assessments, neuroimaging data, and demographic information. Key features include cognitive status, MRI scans, age, education level, and cognitive test scores.
+1. **Data Loading**: Reads in the dataset containing clinical and neuroimaging features.
+2. **Data Preprocessing**: Handles missing values, normalizes data, and splits it into training and testing sets.
+3. **Exploratory Data Analysis (EDA)**: Visualizes the distribution of important features like age, CDR, nWBV, and more.
+4. **Model Building**: Trains a Random Forest classifier. Hyperparameters are tuned using GridSearchCV, and class imbalance is handled using SMOTE.
+5. **Model Evaluation**: Evaluates the model using accuracy, precision, recall, F1-score, and visualizes feature importance.
+6. **Feature Importance**: Analyzes the contribution of different features to the model’s predictions.
 
-Prediction Models
+## Results
 
-Several machine learning models were used to predict Alzheimer's disease status
+- The best Random Forest model achieved an accuracy of **99.2%** on the test set.
 
-Prediction Model 1 contaions
+### Classification Report (without SMOTE):
 
-1. Decision Tree: 88% accuracy
-2. Random Forest: 91% accuracy
-3. ADA Boost: 89% accuracy
+```markdown
+             precision    recall  f1-score   support
 
-Prediction Model 2 contains
+         0       0.97      1.00      0.99        72
+         1       1.00      0.97      0.98        66
+         2       1.00      1.00      1.00        58
+         3       1.00      1.00      1.00        60
 
-1. K-Means Clustering: 88% accuracy
-2. Support Vector Machine (SVM): 88% accuracy
-3. Logistic Regression: 89.3% accuracy
+  accuracy                           0.99       256
+ macro avg       0.99      0.99      0.99       256
+ weighted avg    0.99      0.99      0.99       256
+```
 
+- **Test Set Accuracy** with SMOTE: **99.2%**
+- **Classification Report** with SMOTE:
 
+```markdown
+           precision    recall  f1-score   support
 
+       0       0.99      0.99      0.99        72
+       1       0.98      0.98      0.98        66
+       2       1.00      1.00      1.00        58
+       3       1.00      1.00      1.00        60
+
+  accuracy                           0.99       256
+ macro avg       0.99      0.99      0.99       256
+ weighted avg    0.99      0.99      0.99       256
+```
+
+- The most important features were:
+  1. nWBV (Normalized Whole Brain Volume) – Importance: **0.2118**
+  2. CDR (Clinical Dementia Rating) – Importance: **0.1808**
+  3. Age – Importance: **0.1263**
+  4. ASF (Atlas Scaling Factor) – Importance: **0.1084**
+
+## Usage
+1. Run the notebook cell-by-cell to load data, preprocess, and train the model.
+2. Use the tuned Random Forest model for making predictions.
+3. Adjust hyperparameters or the model architecture as needed to fit your project.
+
+## Conclusion
+This notebook provides a complete workflow for predicting Alzheimer's disease based on clinical and neuroimaging data. With a high accuracy of 99.2%, it offers a robust model suitable for real-world applications.
