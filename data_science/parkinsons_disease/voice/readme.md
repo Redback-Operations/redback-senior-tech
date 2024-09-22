@@ -1,51 +1,37 @@
 # Parkinson's Disease Prediction
 
+This project focuses on **Parkinson's Disease Prediction** using machine learning models based on **biomedical voice measurements**. The models are built and refined to detect the presence of Parkinson's disease, using features such as voice frequency, jitter, shimmer, and other related metrics. This project includes feature selection, model training, and hyperparameter tuning to optimize predictive performance.
+
+## Table of Contents
+1. [Project Overview](#project-overview)
+2. [Features](#features)
+3. [Installation](#installation)
+4. [Usage](#usage)
+5. [Data Structure](#data-structure)
+6. [Modeling Process](#modeling-process)
+7. [Future Enhancements](#future-enhancements)
+8. [Contributing](#contributing)
+9. [License](#license)
+
+---
+
 ## Project Overview
 
-This project aims to build and refine a machine learning model to predict the presence of Parkinson's disease using features extracted from biomedical voice measurements. The focus is on selecting relevant features, retraining multiple models, and optimizing their performance through hyperparameter tuning.
+The **Parkinson's Disease Prediction** project uses biomedical voice measurements to predict the presence of Parkinson's disease in individuals. The dataset includes voice measurements that capture irregularities in speech, which are common in Parkinson's patients. The project explores several machine learning models, including **Logistic Regression**, **Support Vector Machine (SVM)**, **Decision Tree**, and **Random Forest**. Feature selection and hyperparameter tuning are applied to improve model accuracy and reliability.
 
-## Dataset
+---
 
-The dataset used in this project is derived from biomedical voice measurements. It includes 195 instances with 22 numerical features, including metrics like jitter, shimmer, and harmonic-to-noise ratio, which are key indicators in diagnosing Parkinson's disease.
+## Features
 
-## Project Structure
+- **Feature Selection with RFE**: Uses Recursive Feature Elimination (RFE) to select the most important features for prediction.
+- **Hyperparameter Tuning**: GridSearchCV is used to tune model parameters for improved accuracy.
+- **Model Comparison**: Multiple models are evaluated and compared using key metrics like accuracy, precision, recall, and F1 score.
+- **Best Model Selection**: Random Forest emerged as the best model, with consistently high performance across all metrics.
 
-- **Data Processing:** 
-  - The dataset was loaded and cleaned, with categorical features separated from numerical features.
-  - The 'name' column, which is irrelevant for modeling, was dropped.
-  - Missing values were checked and handled.
-  
-- **Data Visualization:** 
-  - KDE plots were used to explore the distribution of each feature.
-  - A clustermap was generated to visualize the correlations between features.
-  - Box plots were created to show the distribution of features grouped by Parkinson's status.
-  - A bar plot was used to display the count of healthy vs Parkinson's individuals.
-
-- **Model Training - Normal:**
-  - Four models were trained using the entire feature set: Logistic Regression, SVM, Decision Tree, and Random Forest.
-  - Each model's performance was evaluated based on accuracy, precision, recall, and F1 score.
-  
-- **Model Training - Newer Version:**
-  - Selected a subset of features that were most relevant to the prediction task.
-  - Retrained the models with the refined feature set, and compared their performance to the initial results.
-
-- **Model Training - Hyperparameter Tuning:**
-  - Applied hyperparameter tuning using GridSearchCV to further optimize each model.
-  - Used Recursive Feature Elimination (RFE) for feature selection in Logistic Regression.
-
-- **Conclusion and Results:**
-  - SVM showed the most significant improvement with hyperparameter tuning and is a strong candidate for deployment.
-  - Decision Tree and Random Forest performed consistently well, with Random Forest emerging as the best-performing model overall.
-  - Logistic Regression, while not showing significant improvement, remains a simple and interpretable model.
-
-## Key Findings
-
-- **Random Forest** emerged as the best model for predicting Parkinson's disease, with the highest accuracy and performance metrics.
-- **SVM** also performed well after hyperparameter tuning and could be considered depending on the specific needs of the deployment environment.
+---
 
 ## Installation
 
-To replicate this project, you'll need to install the following Python packages:
-
-```bash
-pip install numpy pandas seaborn scikit-learn matplotlib
+1. **Clone the Repository**:
+   ```bash
+   git clone https://github.com/your-username/parkinsons-disease-prediction.git
