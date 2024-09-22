@@ -91,11 +91,7 @@ By combining insights from both datasets, this project strives to improve early 
    ```
 
 4. **Run the Notebooks or Scripts**:
-   To run the notebooks or scripts for both analyses:
-   ```bash
-   jupyter notebook Parkinsons_Disease_Prediction_Voice.ipynb
-   jupyter notebook Parkinsons_Disease_Prediction_Gait.ipynb
-   ```
+   To run the notebooks or scripts for both analyses
 
 ---
 
