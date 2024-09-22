@@ -39,7 +39,7 @@ The **Health Monitoring Dashboard** is a web-based dashboard created using **Das
 
 1. **Clone the Repository**:
    ```bash
-   git clone https://github.com/your-username/health-monitoring-dashboard.git
+   git clone https://github.com/Redback-Operations/redback-senior-tech
    ```
 
 2. **Navigate to the Project Directory**:
