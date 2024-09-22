@@ -35,8 +35,8 @@ The **Parkinson's Disease Prediction** project uses biomedical voice measurement
 
 1. **Clone the Repository**:
    ```bash
-   git clone https://github.com/your-username/parkinsons-disease-prediction.git
-   ```
+   git clone https://github.com/Redback-Operations/redback-senior-tech.git
+   
 
 2. **Navigate to the Project Directory**:
    ```bash
