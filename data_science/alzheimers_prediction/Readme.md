@@ -1,4 +1,4 @@
-# Alzheimer's Disease Prediction Dashboard
+# Alzheimer's Disease Prediction 
 
 This project is an **Alzheimer's Disease Prediction Notebook** using **machine learning models**. It is designed to predict the **onset** or **progression** of Alzheimer's disease by analyzing clinical and neuroimaging data. The notebook performs **data preprocessing**, **feature engineering**, **model training**, **evaluation**, and **visualization** to help diagnose Alzheimer's with high accuracy.
 
