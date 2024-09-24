@@ -33,7 +33,7 @@ class SleepMetrics:
             if value in [1, 2, 3, 4] and temp_index is None:
                 temp_index = index
                 break
-            elif value == 6:
+            if value == 6:
                 temp_index = None
 
         segment_difference = temp_index - first_occurrence_index
@@ -158,4 +158,3 @@ class SleepMetrics:
 
         return (sleep_latency, sleep_duration, sleep_to_rem_latency,
                 norem1, norem2, norem3, rem, arousal_index)
-
