@@ -16,7 +16,11 @@ This project involves analyzing gait data to detect Parkinson’s Disease. It us
 The objective of this project is to detect Parkinson’s disease by analyzing gait data. The goal is to identify differences between PD patients and control subjects to aid in the early detection and diagnosis of Parkinson’s Disease.
 
 ## Dataset link:
-https://physionet.org/content/gaitpdb/1.0.0/
+- Healthy people data : https://drive.google.com/file/d/1gJTEqoxrDGixTomn6vYGBWcNP7O1Mdn6/view?usp=drive_link
+- Diagoned peaple data : https://drive.google.com/file/d/1GFEaRlnA92tEFo7C8H8fBDPbHrVP5Wdt/view?usp=drive_link
+
+## Model:
+- Random forest model : https://drive.google.com/file/d/1JJMOdQDNQZpa3UmxdUat9AyB2v4MHmQw/view?usp=drive_link
 
 ## Prerequisites
 - TensorFlow
