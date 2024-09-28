@@ -1,32 +1,145 @@
-ALZEHEIMER"S DISEASE 
+# Alzheimer's Disease Prediction 
 
-Introduction
+This project is an **Alzheimer's Disease Prediction Notebook** using **machine learning models**. It is designed to predict the **onset** or **progression** of Alzheimer's disease by analyzing clinical and neuroimaging data. The notebook performs **data preprocessing**, **feature engineering**, **model training**, **evaluation**, and **visualization** to help diagnose Alzheimer's with high accuracy.
 
-Alzheimer's disease is a brain disorder that gradually destroys memory and thinking skills and eventually the ability to carry out simple tasks. It is the most common cause of dementia among older adults. The disease involves a buildup of proteins in the brain, leading to the death of brain cells. There is no cure, but treatments can help manage symptoms and improve quality of life.
+## Table of Contents
+1. [Project Overview](#project-overview)
+2. [Features](#features)
+3. [Installation](#installation)
+4. [Usage](#usage)
+5. [Data Structure](#data-structure)
+6. [Modeling Process](#modeling-process)
+7. [Results](#results)
+8. [Future Enhancements](#future-enhancements)
+9. [Contributing](#contributing)
+10. [License](#license)
 
-Aim
+---
 
-The main objective our model is to predict the onset and progression of Alzheimer's disease using a combination of clinical assessments, neuroimaging data, and demographic information. By accurately identifying individuals at risk and monitoring the progression of the disease.
+## Project Overview
 
-Dataset Description 
+The **Alzheimer's Disease Prediction** project uses machine learning models to analyze clinical and neuroimaging data. The goal is to predict the onset or progression of Alzheimer's disease and identify the most important features contributing to the prediction. With a focus on **Random Forest** models and **SMOTE** for handling class imbalance, the project achieves high accuracy in diagnosing Alzheimer's disease.
 
-The dataset includes clinical assessments, neuroimaging data, and demographic information. Key features include cognitive status, MRI scans, age, education level, and cognitive test scores.
+---
 
-Prediction Models
+## Features
 
-Several machine learning models were used to predict Alzheimer's disease status
+- **Data Preprocessing**: Clean and normalize the data, handling missing values and scaling features.
+- **Exploratory Data Analysis (EDA)**: Visualize key features such as age, CDR (Clinical Dementia Rating), and nWBV (Normalized Whole Brain Volume).
+- **Model Building**: Train a **Random Forest classifier**, optimize hyperparameters using **GridSearchCV**, and handle class imbalance using **SMOTE**.
+- **Model Evaluation**: Evaluate models using accuracy, precision, recall, F1-score, and confusion matrix.
+- **Feature Importance**: Visualize the most important features contributing to Alzheimer's prediction.
 
-Prediction Model 1 contaions
+---
 
-1. Decision Tree: 88% accuracy
-2. Random Forest: 91% accuracy
-3. ADA Boost: 89% accuracy
+## Installation
 
-Prediction Model 2 contains
+1. **Clone the Repository**:
+   ```bash
+   git clone https://github.com/Redback-Operations/redback-senior-tech/tree/main/data_science/alzheimers_prediction
+   ```
 
-1. K-Means Clustering: 88% accuracy
-2. Support Vector Machine (SVM): 88% accuracy
-3. Logistic Regression: 89.3% accuracy
+2. **Navigate to the Project Directory**:
+   ```bash
+   cd alzheimers-prediction-dashboard
+   ```
 
+3. **Install Required Dependencies**: You need Python 3.x installed along with the following libraries:
+   ```bash
+   pip install numpy pandas scikit-learn matplotlib seaborn imbalanced-learn
+   ```
 
+4. **Run the Notebook**:
+   ```bash
+   jupyter notebook task.ipynb
+   ```
 
+---
+
+## Usage
+
+### Upload Alzheimer's Data:
+- The notebook loads a dataset containing clinical and neuroimaging data.
+- Ensure the dataset is correctly formatted and structured as expected for the best results.
+
+### Train and Test the Model:
+- The notebook trains a **Random Forest classifier** on the preprocessed data.
+- **SMOTE** is used to handle class imbalance, improving prediction performance on underrepresented classes.
+
+### Model Evaluation:
+- Evaluate the model based on key metrics: **accuracy**, **precision**, **recall**, **F1 score**, and **feature importance** analysis.
+
+---
+
+## Data Structure
+
+The dataset should contain the following key columns:
+
+- `Subject ID`: Unique identifier for the subject.
+- `Age`: Age of the subject.
+- `CDR`: Clinical Dementia Rating.
+- `nWBV`: Normalized Whole Brain Volume.
+- `ASF`: Atlas Scaling Factor.
+- `MMSE`: Mini-Mental State Examination score.
+
+Ensure the dataset is clean and contains no missing or erroneous values.
+
+---
+
+## Modeling Process
+
+1. **Data Preprocessing**: 
+   - Handle missing values, normalize features, and split the data into training and testing sets.
+  
+2. **Feature Selection**: 
+   - Use **Recursive Feature Elimination (RFE)** to select the most important features for prediction.
+
+3. **Model Building**: 
+   - Train various models including **Logistic Regression**, **SVM**, and **Random Forest**, and use **GridSearchCV** for hyperparameter tuning.
+
+4. **Class Imbalance Handling**: 
+   - Use **SMOTE** to balance the classes and improve model performance on underrepresented categories.
+
+---
+
+## Results
+
+- **Test Set Accuracy**: The best-performing **Random Forest model** achieved an accuracy of **99.2%** on the test set after applying SMOTE for class balancing.
+
+- **Classification Report (with SMOTE)**:
+   ```plaintext
+   Precision   Recall   F1-Score  Support
+   0:    0.99       0.99      0.99       72
+   1:    0.98       0.98      0.98       66
+   2:    1.00       1.00      1.00       58
+   3:    1.00       1.00      1.00       60
+   ```
+
+- **Feature Importance**:
+   1. `nWBV (Normalized Whole Brain Volume)` - Importance: **0.2118**
+   2. `CDR (Clinical Dementia Rating)` - Importance: **0.1808**
+   3. `Age` - Importance: **0.1263**
+   4. `ASF (Atlas Scaling Factor)` - Importance: **0.1084**
+
+---
+
+## Future Enhancements
+
+Possible future improvements and features:
+
+- **XGBoost Model**: Try using **XGBoost** for potentially better performance.
+- **SHAP Analysis**: Use **SHAP** to provide deeper insights into feature importance.
+- **Additional Data**: Incorporate other biomarkers or imaging data for a more comprehensive model.
+- **Deployment**: Deploy the model as a web application using **Flask** or **Dash** for real-time predictions.
+
+---
+
+## Contributing
+
+Contributions are welcome! Feel free to open a pull request or submit an issue if you have suggestions or improvements. Please follow the standard GitHub workflow for contributing to the project.
+
+---
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
