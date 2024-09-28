@@ -152,11 +152,19 @@ Potential improvements and future features:
 ---
 
 ## Contributing
-
 Contributions are welcome! Feel free to open a pull request or submit an issue if you have ideas or suggestions for improvement. Follow the standard GitHub workflow for contributions.
+
+## Dataset link:
+- Healthy people data : https://drive.google.com/file/d/1gJTEqoxrDGixTomn6vYGBWcNP7O1Mdn6/view?usp=drive_link
+- Diagoned peaple data : https://drive.google.com/file/d/1GFEaRlnA92tEFo7C8H8fBDPbHrVP5Wdt/view?usp=drive_link
+
+## Model:
+- Random forest model : https://drive.google.com/file/d/1JJMOdQDNQZpa3UmxdUat9AyB2v4MHmQw/view?usp=drive_link
 
 ---
 
-## License
+## Project Status
+A random forest model is developed with an accuracy of 99%.
 
+## License
 This project is licensed under the MIT License - see the LICENSE file for details.
