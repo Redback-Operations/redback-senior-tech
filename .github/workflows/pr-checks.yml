@@ -94,7 +94,7 @@ jobs:
 
       - name: Execute linting check on Python files
         run: |
-          py_files=$(echo "${{ steps.changed_files.outputs.all_changed_files }}" | tr "," "\n" | grep ".py$" || true)
+          py_files=$(echo "${{ steps.changed_files.outputs.all_changed_files }}" | tr "," "\n" | grep "\.py$" || true)
           if [ -n "$py_files" ]; then
             for file in $py_files; do
               flake8 --config=ci_build/flake8 "$file" >> flake8_log.txt || true
