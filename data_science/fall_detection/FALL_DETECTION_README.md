@@ -26,6 +26,27 @@ WEDA-FALL
 ├── final_merged_dataset_with_users_fall.csv
 └── README.md
 ```
+## Dataset Setup Instructions
+
+To run this project, you need to set up the dataset and output directories.
+
+1. **Dataset Directory**:
+   - Create a directory where your dataset will be stored.
+   - Inside this directory, include the subdirectories for the sensor data (e.g., `50hz/`) and the `fall_timestamps.csv` file.
+   - Update the script with the correct path to your dataset folder. Example:
+     ```
+     fall_timestamps_path = '/path/to/dataset/fall_timestamps.csv'
+     base_dir = '/path/to/dataset/50hz/'
+     ```
+
+2. **Output Directory**:
+   - Create a directory where the final merged dataset will be saved.
+   - Update the script with the correct output path. Example:
+     ```
+     final_output_path = '/path/to/output/final_merged_dataset_with_users_fall.csv'
+     ```
+
+Make sure the paths in the code match your folder structure before running the project.
 ## Project structure
 
 The project has numerous components:
