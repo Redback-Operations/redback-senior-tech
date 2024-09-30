@@ -11,6 +11,21 @@ This project aims to develop a fall detection model using accelerometer and gyr
 5. [Usage](#usage)
 6. [Project Roadmap](#project-roadmap)
 
+## Folder Structure
+
+WEDA-FALL
+├── dataset
+│   ├── fall_timestamps.csv
+│   └── 50hz/
+│       ├── F01/ (Folders for each fall scenario)
+│       │   ├── U01_R01_accel.csv (Accelerometer data)
+│       │   ├── U01_R01_gyro.csv (Gyroscope data
+│       │   └── ... (More files)
+│       ├── F02/
+│       └── ...
+├── final_merged_dataset_with_users_fall.csv
+└── README.md
+
 ## Project structure
 
 The project has numerous components:
