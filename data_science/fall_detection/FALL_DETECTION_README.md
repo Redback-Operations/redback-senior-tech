@@ -12,7 +12,7 @@ This project aims to develop a fall detection model using accelerometer and gyr
 6. [Project Roadmap](#project-roadmap)
 
 ## Folder Structure
-
+```
 WEDA-FALL
 ├── dataset
 │   ├── fall_timestamps.csv
@@ -25,7 +25,7 @@ WEDA-FALL
 │       └── ...
 ├── final_merged_dataset_with_users_fall.csv
 └── README.md
-
+```
 ## Project structure
 
 The project has numerous components:
