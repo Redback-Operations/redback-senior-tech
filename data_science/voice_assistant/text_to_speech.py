@@ -1,7 +1,7 @@
 # Used to Speak the response
 import time
 import os
-
+import subprocess
 # Used to get response from user input
 from generate_response import get_response
 
@@ -9,7 +9,7 @@ from generate_response import get_response
 # Function that will speak the response to user
 def speak_response(response):
     time.sleep(2)
-    os.system(f'say "{response}"')
+    subprocess.run(['say', response], check=True)
 
 
 # Function that will keep the voice assistant running
