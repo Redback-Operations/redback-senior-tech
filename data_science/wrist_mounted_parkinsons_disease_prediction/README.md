@@ -39,7 +39,7 @@ A review of studies identified Bradykinesia, Gait Changes, and Hand Tremors as d
 1. They are one of the earliest symptoms of PD.
 2. They can be detected solely using a wrist-mounted device.
 
-A summary of the reviewed studies is available in the document [Research Summary - PD.pdf](#). These studies validated the approach of using wearable devices for detecting PD symptoms.
+A summary of the reviewed studies is available in the document [Reseach_Summary_PD.md](#). These studies validated the approach of using wearable devices for detecting PD symptoms.
 
 ---
 
@@ -108,7 +108,7 @@ Excluded Features:
 
 ## Model Implementation
 
-Detailed implementation of each model is documented in [Parkinsons_Disease_alt_model.ipynb](#).
+Detailed implementation of each model is documented in [Wrist_Mounted_Parkinsons_Disease_model.ipynb](#).
 
 ---
 
