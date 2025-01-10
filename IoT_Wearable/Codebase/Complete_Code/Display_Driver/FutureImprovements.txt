@@ -1,0 +1,16 @@
+Following improvements can be made:
+
+1. User Libraries
+Create a library for shapes or other functions to make template creation easier and improve code modularity.
+There are currently some shapes procedures in the displaydriver file, this can be used for the library. 
+Need to add more parameters such as size.
+
+2. RTC Module implementation
+Implement the RTC module in the driver program to enable time tracking.
+
+3. Sensor data
+Explore how data from the sensor is going to be received, what the format is etc. 
+And develop a way to show actual sensor data to the display.
+
+4. New Templates
+Based on what data needs to be presented, (might included data science team's analysis) consider the layout for a new template.
