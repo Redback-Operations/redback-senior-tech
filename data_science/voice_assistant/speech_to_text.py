@@ -1,4 +1,4 @@
-# Used to listen to speech and convert to text
+# This module listens to the microphone input and converts speech to text using the SpeechRecognition library.
 import speech_recognition as sr
 
 # Used to create a response and speak the response
